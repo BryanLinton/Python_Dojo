@@ -1,7 +1,7 @@
 def update_val():
     x = [ [5,2,3], [10,8,9] ] 
     students = [
-        {'first_name':  'Michael', 'last_name' : 'Jordan'},
+        {'first_name' : 'Michael', 'last_name' : 'Jordan'},
         {'first_name' : 'John', 'last_name' : 'Rosales'}
     ]
     sports_directory = {
@@ -20,18 +20,18 @@ print(update_val())
 
 
 students = [
-        {'first_name':  'Michael', 'last_name' : 'Jordan'},
+        {'first_name' : 'Michael', 'last_name' : 'Jordan'},
         {'first_name' : 'John', 'last_name' : 'Rosales'},
         {'first_name' : 'Mark', 'last_name' : 'Guillen'},
         {'first_name' : 'KB', 'last_name' : 'Tonel'}
     ]
 
 def iterateDictionary(some_list):
-  for dicts in some_list:
-   disp_str = ''
-   for k,v in dicts.items():
-    disp_str+= k +' - '+ v + ', '
-   print(disp_str[:len(disp_str) - 2])
+    for dicts in some_list:
+        disp_str = ''
+    for k,v in dicts.items():
+        disp_str+= k +' - '+ v + ', '
+    print(disp_str[:len(disp_str) - 2])
 iterateDictionary(students)
 
 def iterateDictionary2(key_name, some_list):
@@ -55,3 +55,4 @@ def print_info(some_dict):
     print('\n')
 
 print_info(dojo)
+
