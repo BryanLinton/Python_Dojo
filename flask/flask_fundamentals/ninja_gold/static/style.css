@@ -1,0 +1,31 @@
+* {
+    margin: 0px auto;
+}
+#wrapper {
+    width: 1000px;
+}
+
+#gold input {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.jobs {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    margin: 20px 22px;
+    background-color: rgb(240, 236, 45);
+    text-align: center;
+}
+
+.jobs h2 {
+    padding: 10px;
+}
+
+.jobs p {
+    padding: 5px;
+}
+
+.jobs form {
+    padding: 20px;
+}
