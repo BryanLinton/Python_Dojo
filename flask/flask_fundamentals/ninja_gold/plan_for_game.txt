@@ -1,0 +1,5 @@
+output field should probably be a post. 
+Each button within the "job" forms should post.
+Each output from the from should be hidden. 
+need a session variable that stores the values from the forms. 
+Use a random number generator for the casino.
