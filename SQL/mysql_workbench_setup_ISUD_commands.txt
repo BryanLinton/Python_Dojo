@@ -1,0 +1,8 @@
+SELECT * FROM users;
+
+INSERT INTO twitter.users (first_name, last_name, handle, birthday, created_at, updated_at)
+VALUES ("Bryan", "Linton", "BUBBA", "1990-07-02", Now(), Now());
+
+UPDATE twitter.users SET handle = "Why is my copier broken" WHERE users.id = 6;
+
+DELETE FROM twitter.users WHERE users.id = 6;
