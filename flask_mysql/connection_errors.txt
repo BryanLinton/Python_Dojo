@@ -1,0 +1,15 @@
+RuntimeError: cryptography is required for sha256_password or caching_sha2_password (Changed user)
+
+ModuleNotFoundError: No module named 'first_flask_mysq (changed the name of the .py sql file)
+
+ModuleNotFoundError: No module name "pymysql.cookies (changed .cursors to .cookies)
+
+db = pasta, NameError: name 'pasta' is not defined (pasta was not the name of my db)
+
+AttributeError: 'MySQLConnection' object has no attribute 'connection' (hashed out self.connection - connection)(first function call failed to query the DB)
+
+elif query.lower().find("select") >= 1: (changed value to 1 from 0 now the functin returns none)
+					(removed lower from query.lower and the function returned none)
+
+
+
