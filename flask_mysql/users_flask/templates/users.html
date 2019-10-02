@@ -11,13 +11,16 @@
 <body>
     <h1>All Users</h1>
     <table class="table table-sm table-dark">
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Full Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Created At</th>
-            <th scope="col"> Actions</th>
-        </tr>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Created At</th>
+                <th scope="col"> Actions</th>
+            </tr>
+        </thead>
+        <tbody>
         {% for one_user in all_users%}
             <tr>
                 <td>{{one_user["id"]}}</td>
@@ -30,8 +33,9 @@
                     <a href="">Delete</a>
                 </td>
             </tr>
-        {% endfor %}    
+        {% endfor %}  
+        </tbody>  
     </table>
-    <a href="">Add a New User</a>
+    <a href="/users/new">Add a New User</a>
 </body>
 </html>
