@@ -23,40 +23,52 @@ def insert_user():
         "ln": request.form["lname"],
         "em": request.form["email"]
     }
-    new_user_id = mysql.query_db(query, data)
-    return redirect("/users/{}".format(new_user_id))
+    id = mysql.query_db(query, data)
+    return redirect("/users/{}".format(id))
 
-@app.route("/users/<user_id>")
-def view_user(user_id):
+@app.route("/users/<id>")
+def view_user(id):
+    mysql = connectToMySQL('manage_users')
     query = "SELECT * FROM users WHERE id = %(user_id)s"
     data = {
-        "user_id": id
+         "user_id": id
     }
-    mysql = connectToMySQL('manage_users')
     user = mysql.query_db(query, data)
     return render_template("user_profile.html", user = user[0])
 
-@app.route("/delete/<user_id>")
-def delete_user(user_id):
-    query = "DELETE FROM users WHERE id = %(id)s"
+@app.route("/delete/<id>")
+def delete_user(id):
+    mysql = connectToMySQL('manage_users')
+    query = "DELETE FROM users WHERE id = %(user_id)s"
     data = {
         "user_id": id
     }
-    mysql = connectToMySQL('manage_users')
     user = mysql.query_db(query, data)
-    return redirect("/users")    
+    return redirect("/users")
 
-@app.route("/update_user/<user_id>", methods=['POST'])
-def update_user(user_id):
-    query = "UPDATE users SET first_name=%(fn)s, last_name=%(ln)s, email=%(em)s, description=%(dsc)s, updated_at=NOW()"
+@app.route("/update_user/<id>", methods=['POST'])
+def update_user(id):
+    mysql = connectToMySQL('manage_users')
+    query = "UPDATE users SET first_name=%(fn)s, last_name=%(ln)s, email=%(em)s, updated_at = NOW() WHERE id = %(user_id)s"
     data = {
       'fn': request.form['fname'],
       'ln': request.form['lname'],
       'em': request.form['email'],
+      'user_id': id
+    }
+    mysql.query_db(query, data)
+    return redirect('/users/{}'.format(id))
+
+@app.route("/edit_user/<id>")
+def edit_user(id):
+    query = "SELECT * FROM users WHERE id = %(user_id)s"
+    data = {
+        'user_id': id
     }
     mysql = connectToMySQL('manage_users')
-    mysql.query_db(query, data)
-    return redirect('/users/{}'.format(user_id))
+    user = mysql.query_db(query, data)
+    return render_template("edit_user.html", user = user[0])    
+
 
 if __name__ == "__main__":
     app.run(debug=True)

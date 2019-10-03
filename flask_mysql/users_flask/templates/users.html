@@ -28,9 +28,9 @@
                 <td>{{one_user["email"]}}</td>
                 <td>{{one_user["created_at"]}}</td>
                 <td>
-                    <a href="/users/<user_id>">Show</a>
-                    <a href="">Edit</a>
-                    <a href="/delete/<user_id>">Delete</a>
+                    <a href="/users/{{one_user['id']}}">Show</a>
+                    <a href="/edit_user/{{one_user['id']}}">Edit</a>
+                    <a href="/delete/{{one_user['id']}}">Delete</a>
                 </td>
             </tr>
         {% endfor %}  
