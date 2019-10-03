@@ -15,7 +15,7 @@ def create_user():
     return render_template("new.html")
 
 @app.route("/users/create", methods=["POST"])
-def query_user():
+def insert_user():
     mysql = connectToMySQL("manage_users")
     query = "INSERT INTO users (first_name, last_name, email, created_at) VALUES (%(fn)s, %(ln)s, %(em)s, NOW());"
     data = {
@@ -24,13 +24,39 @@ def query_user():
         "em": request.form["email"]
     }
     new_user_id = mysql.query_db(query, data)
-    return redirect("/users/show/<id>")
+    return redirect("/users/{}".format(new_user_id))
 
-@app.route("/users/show/", methods=["GET"])
-def view_new_user():
-    mysql = connectToMySQL("manage_users")
-    user = mysql.query_db("SELECT id, concat(first_name, ' ', last_name) AS full_name, email, created_at, updated_at FROM users")
-    return render_template("user_profile.html", current_user = user)
+@app.route("/users/<user_id>")
+def view_user(user_id):
+    query = "SELECT * FROM users WHERE id = %(user_id)s"
+    data = {
+        "user_id": id
+    }
+    mysql = connectToMySQL('manage_users')
+    user = mysql.query_db(query, data)
+    return render_template("user_profile.html", user = user[0])
+
+@app.route("/delete/<user_id>")
+def delete_user(user_id):
+    query = "DELETE FROM users WHERE id = %(id)s"
+    data = {
+        "user_id": id
+    }
+    mysql = connectToMySQL('manage_users')
+    user = mysql.query_db(query, data)
+    return redirect("/users")    
+
+@app.route("/update_user/<user_id>", methods=['POST'])
+def update_user(user_id):
+    query = "UPDATE users SET first_name=%(fn)s, last_name=%(ln)s, email=%(em)s, description=%(dsc)s, updated_at=NOW()"
+    data = {
+      'fn': request.form['fname'],
+      'ln': request.form['lname'],
+      'em': request.form['email'],
+    }
+    mysql = connectToMySQL('manage_users')
+    mysql.query_db(query, data)
+    return redirect('/users/{}'.format(user_id))
 
 if __name__ == "__main__":
-    app.run(debug=True) 
+    app.run(debug=True)
