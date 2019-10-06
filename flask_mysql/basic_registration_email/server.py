@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, flash
 from sqlconnection import connectToMySQL
+import re
 
 app = Flask(__name__)
 app.secret_key = ("secret")
@@ -8,7 +9,7 @@ app.secret_key = ("secret")
 def index():
     return render_template("index.html")
 
-
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 @app.route("/validation", methods=["POST"])
 def validate_form():
     is_valid = True
@@ -20,6 +21,13 @@ def validate_form():
     if len(request.form["last_name"]) < 1:
         is_valid = False
         flash("Last name can not be blank")
+
+    if len(request.form["email"]) < 1:
+        is_valid = False
+        flash("Email can not be blank")
+
+    if not EMAIL_REGEX.match(request.form["email"]):
+        flash("Invalid email address" )
 
     if len(request.form["password"]) < 5:
         is_valid = False
@@ -35,10 +43,11 @@ def validate_form():
 
     if is_valid:
         mysql = connectToMySQL("basic_registration")
-        query = "INSERT INTO registration (first_name, last_name, password, pw_cnfm, created_at) VALUES (%(fname)s, %(lname)s, %(pass)s, %(cf_pass)s, now());"
+        query = "INSERT INTO registration (first_name, last_name, email, password, pw_cnfm, created_at) VALUES (%(fname)s, %(lname)s, %(em)s, %(pass)s, %(cf_pass)s, now());"
         data = {
             "fname" : request.form['first_name'],
             "lname" : request.form['last_name'],
+            "em" : request.form["email"],
             "pass" : request.form['password'],
             "cf_pass" : request.form["conf_pass"]
         }
