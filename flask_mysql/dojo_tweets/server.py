@@ -84,16 +84,20 @@ def login():
         }
         user = mysql.query_db(query, data)
 
-        if user:
-            hashed_password = user[0]["password"]
+        if not user:
+            flash("User not found")
+            return redirect ("/")
+        
+        if not bcrypt.check_password_hash(user[0]["password"], request.form["lpassword"]):
+            is_valid = False
+            flash("Password is not valid")
     
-            if bcrypt.check_password_hash(user[0]["password"], request.form["lpassword"]):
-                session["id"] = user[0]["id"]
-                flash("You successfully logged in!")
-                return redirect ("/dashboard")
-            else:
-                flash("Please us a valid email address")
-                return redirect ("/")
+        if is_valid:
+            session["id"] = user[0]["id"]
+            return redirect ("/dashboard")
+        else:
+            flash("User not found")
+            return redirect ("/")
 
 @app.route("/dashboard")
 def tweet_home():
@@ -105,12 +109,35 @@ def tweet_home():
     data = {'id': session['id']}
     user = mysql.query_db(query, data)
 
-    return render_template("dashboard.html", user=user[0])
+    mysql = connectToMySQL("dojo_tweets")
+    query = "SELECT users.first_name, tweets.created_at, tweets.content, tweets.created_at FROM tweets JOIN users ON tweets.users_id = users.id ORDER BY tweets.created_at DESC"
+    tweets = mysql.query_db(query)
+
+
+    return render_template("dashboard.html", user=user[0], tweets = tweets)
 
 @app.route("/tweets/create", methods=["POST"])
 def post_tweet():
-    mysql = connectToMySQL("dojo_tweets")
-    query = "INSERT INTO users (tweets.content, created_at)"
+    if "id" not in session:
+        return redirect("/")
+
+    is_valid = True
+    if len(request.form["post_tweet"]) < 1:
+        is_valid = False
+        flash("Tweet can not be blank")
+    if len(request.form["post_tweet"]) > 255:
+        is_valid = False
+        flash("Tweet can not be more than 255 characters")
+
+    if is_valid:
+        mysql = connectToMySQL("dojo_tweets")
+        query = "INSERT INTO tweets (content, users_id, created_at) VALUES (%(content)s, %(user_id)s, NOW())"
+        data = {
+            "user_id": session["id"],
+            "content": request.form["post_tweet"]
+        }
+        mysql.query_db(query, data)
+        return redirect("/dashboard")
 
 @app.route("/logout")
 def logout():
