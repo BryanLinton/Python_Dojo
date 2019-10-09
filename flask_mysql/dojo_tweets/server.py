@@ -138,6 +138,8 @@ def post_tweet():
         }
         mysql.query_db(query, data)
         return redirect("/dashboard")
+    else:
+        return redirect ("/dashboard")
 
 @app.route("/logout")
 def logout():
