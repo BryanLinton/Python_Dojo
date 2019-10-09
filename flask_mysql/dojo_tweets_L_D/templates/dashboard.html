@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Success</title>
+</head>
+
+<body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{message}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <h1>Dojo Tweets</h1>
+    <h2>Welcome, {{user["first_name"]}}</h2>
+    <a href="/logout">Logout</a>
+    <hr>
+    <h1>Write a Tweet:</h1>
+    <form action="/tweets/create" method="POST">
+        <textarea name="post_tweet" cols="30" rows="5"></textarea>
+        <br>
+        <input type="submit" name="submit" value="Tweet">
+    </form>
+
+    {% for tweet in tweets %}
+        <p>{{tweet.first_name}} says:</p>
+        <p>{{tweet.content}}</p>
+        {% if tweet["id"] in liked_tweets %}
+        <p><a href="/unlike_tweet/{{tweet['id']}}"><button>Unlike Like Tweet</button></a></p>
+        {% else %}
+        <p><a href="/like_tweet/{{tweet['id']}}"><button>Like Tweet</button></a></p>
+        {% endif %}
+
+    {% endfor %}
+
+</body>
+
+</html>
