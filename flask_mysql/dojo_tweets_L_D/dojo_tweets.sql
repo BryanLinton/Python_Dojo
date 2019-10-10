@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `dojo_tweets`.`users` (
   `updated_at` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -52,9 +52,10 @@ CREATE TABLE IF NOT EXISTS `dojo_tweets`.`tweets` (
   INDEX `fk_tweets_users_idx` (`users_id` ASC) VISIBLE,
   CONSTRAINT `fk_tweets_users`
     FOREIGN KEY (`users_id`)
-    REFERENCES `dojo_tweets`.`users` (`id`))
+    REFERENCES `dojo_tweets`.`users` (`id`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -69,16 +70,14 @@ CREATE TABLE IF NOT EXISTS `dojo_tweets`.`liked_tweets` (
   PRIMARY KEY (`user_id`, `tweet_id`),
   INDEX `fk_users_has_tweets_tweets1_idx` (`tweet_id` ASC) VISIBLE,
   INDEX `fk_users_has_tweets_users1_idx` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `fk_users_has_tweets_users1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `dojo_tweets`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_users_has_tweets_tweets1`
     FOREIGN KEY (`tweet_id`)
     REFERENCES `dojo_tweets`.`tweets` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE,
+  CONSTRAINT `fk_users_has_tweets_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `dojo_tweets`.`users` (`id`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

@@ -27,13 +27,19 @@
         <input type="submit" name="submit" value="Tweet">
     </form>
 
+    <h1>Your Feed:</h1>
     {% for tweet in tweets %}
         <p>{{tweet.first_name}} says:</p>
         <p>{{tweet.content}}</p>
+
         {% if tweet["id"] in liked_tweets %}
         <p><a href="/unlike_tweet/{{tweet['id']}}"><button>Unlike Like Tweet</button></a></p>
         {% else %}
         <p><a href="/like_tweet/{{tweet['id']}}"><button>Like Tweet</button></a></p>
+        {% endif %}
+
+        {% if tweet.users_id == session['id'] %}
+        <p><a href="/delete_tweet/{{tweet['id']}}"><button>Delete This Tweet</button></a></p>
         {% endif %}
 
     {% endfor %}

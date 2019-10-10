@@ -110,7 +110,7 @@ def tweet_home():
     user = mysql.query_db(query, data)
 
     mysql = connectToMySQL("dojo_tweets")
-    query = "SELECT users.first_name, tweets.content, tweets.created_at, tweets.id FROM tweets JOIN users ON tweets.users_id = users.id ORDER BY tweets.created_at DESC"
+    query = "SELECT tweets.users_id, users.first_name, tweets.content, tweets.created_at, tweets.id FROM tweets JOIN users ON tweets.users_id = users.id ORDER BY tweets.created_at DESC"
     tweets = mysql.query_db(query)
 
     mysql = connectToMySQL("dojo_tweets")
@@ -119,6 +119,7 @@ def tweet_home():
         "user_id": session["id"]
     }
     liked_tweets = [ tweet ["tweet_id"] for tweet in mysql.query_db(query,data) ]
+
     return render_template("dashboard.html", user=user[0], tweets = tweets, liked_tweets = liked_tweets)
 
 @app.route("/tweets/create", methods=["POST"])
@@ -145,6 +146,17 @@ def post_tweet():
         return redirect("/dashboard")
     else:
         return redirect ("/dashboard")
+
+@app.route("/delete_tweet/<tweet_id>")
+def delete_tweet(tweet_id):
+    mysql = connectToMySQL("dojo_tweets")
+    query = "Delete FROM tweets WHERE id = %(t_id)s AND users_id = %(u_id)s"
+    data = {
+        "t_id" : tweet_id,
+        "u_id" : session["id"]
+    }
+    mysql.query_db(query, data)
+    return redirect ("/dashboard")
 
 @app.route("/like_tweet/<tweet_id>")
 def user_liked_tweet(tweet_id):
