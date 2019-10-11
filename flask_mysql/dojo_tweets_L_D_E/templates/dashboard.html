@@ -42,6 +42,11 @@
         <p><a href="/delete_tweet/{{tweet['id']}}"><button>Delete</button></a></p>
         {% endif %}
 
+        {% if tweet.users_id == session['id'] %}
+        <p><a href="/edit_tweet/{{tweet['id']}}"><button>Update</button></a></p>
+        {% endif %}
+
+        <hr>
     {% endfor %}
 
 </body>
