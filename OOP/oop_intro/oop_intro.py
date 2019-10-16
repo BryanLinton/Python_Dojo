@@ -17,9 +17,9 @@
 
 
 class BankAccount:
-    def __init__(self, int_rate, balance):
-        self.rate = 0.03
-        self.balance = 0.00
+    def __init__(self, initial_balance = 0):
+        self.int_rate = 0.03
+        self.balance = initial_balance
 
     def deposit(self, amount):
         self.balance += amount
@@ -31,13 +31,18 @@ class BankAccount:
 
     def display_account_info(self):
         print("Balance: {}".format(self.balance))
+        return self
 
     def yield_interest(self):
         if self.balance > 0.00:
-            self.balance = (self.rate * self.balance) + self.balance
+            self.balance = (self.int_rate * self.balance) + self.balance
+        else:
+            print("No balance to apply interest")
+        return self
 
 
-bubba = (0.03, 0) 
-bubba.deposit(100).deposit(200).deposit(25).withdrawal(325)
-guido.make_deposit(50).make_deposit(50).make_withdrawal(50).make_withdrawal(25)
+bubba = BankAccount(0) 
+guido = BankAccount(500)
+bubba.deposit(100).deposit(100).deposit(50).withdraw(150).yield_interest().display_account_info()
+guido.deposit(50).deposit(50).withdraw(50).withdraw(25).yield_interest().display_account_info()
 
