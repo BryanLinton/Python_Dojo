@@ -1,4 +1,4 @@
-from flask import Flask, render_template					
+from flask import Flask, render_template, request, redirect					
 from flask_sqlalchemy import SQLAlchemy			
 from sqlalchemy.sql import func                         
 from flask_migrate import Migrate
@@ -22,6 +22,19 @@ class User(db.Model):
 @app.route("/")
 def test():
     return render_template("index.html")
+
+@app.route("/add_user")
+def add_user():
+    create_user = User(first_name = "fname", last_name = "lname", email = "email", age = "a")
+    db.session.add(create_user)
+    db.session.commit()
+    user = {
+        "fname" : request.form["first_name"],
+        "lname" : request.form["last_name"],
+        "email" : request.form["form_email"],
+        "a" : request.form["age"]
+    }
+    return redirect ("/")
 
 if __name__ == "__main__":
     app.run(debug=True)
