@@ -17,12 +17,16 @@ list, set, and tuple.
 __all__ = ['deque', 'defaultdict', 'namedtuple', 'UserDict', 'UserList',
             'UserString', 'Counter', 'OrderedDict', 'ChainMap']
 
+<<<<<<< HEAD
 # For backwards compatibility, continue to make the collections ABCs
 # available through the collections module.
 from _collections_abc import *
 import _collections_abc
 __all__ += _collections_abc.__all__
 
+=======
+import _collections_abc
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 from operator import itemgetter as _itemgetter, eq as _eq
 from keyword import iskeyword as _iskeyword
 import sys as _sys
@@ -36,7 +40,11 @@ try:
 except ImportError:
     pass
 else:
+<<<<<<< HEAD
     MutableSequence.register(deque)
+=======
+    _collections_abc.MutableSequence.register(deque)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 try:
     from _collections import defaultdict
@@ -44,22 +52,52 @@ except ImportError:
     pass
 
 
+<<<<<<< HEAD
+=======
+def __getattr__(name):
+    # For backwards compatibility, continue to make the collections ABCs
+    # through Python 3.6 available through the collections module.
+    # Note, no new collections ABCs were added in Python 3.7
+    if name in _collections_abc.__all__:
+        obj = getattr(_collections_abc, name)
+        import warnings
+        warnings.warn("Using or importing the ABCs from 'collections' instead "
+                      "of from 'collections.abc' is deprecated since Python 3.3,"
+                      "and in 3.9 it will stop working",
+                      DeprecationWarning, stacklevel=2)
+        globals()[name] = obj
+        return obj
+    raise AttributeError(f'module {__name__!r} has no attribute {name!r}')
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 ################################################################################
 ### OrderedDict
 ################################################################################
 
+<<<<<<< HEAD
 class _OrderedDictKeysView(KeysView):
+=======
+class _OrderedDictKeysView(_collections_abc.KeysView):
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     def __reversed__(self):
         yield from reversed(self._mapping)
 
+<<<<<<< HEAD
 class _OrderedDictItemsView(ItemsView):
+=======
+class _OrderedDictItemsView(_collections_abc.ItemsView):
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     def __reversed__(self):
         for key in reversed(self._mapping):
             yield (key, self._mapping[key])
 
+<<<<<<< HEAD
 class _OrderedDictValuesView(ValuesView):
+=======
+class _OrderedDictValuesView(_collections_abc.ValuesView):
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     def __reversed__(self):
         for key in reversed(self._mapping):
@@ -178,11 +216,17 @@ class OrderedDict(dict):
         return key, value
 
     def move_to_end(self, key, last=True):
+<<<<<<< HEAD
         '''Move an existing element to the end (or beginning if last==False).
 
         Raises KeyError if the element does not exist.
         When last=True, acts like a fast version of self[key]=self.pop(key).
 
+=======
+        '''Move an existing element to the end (or beginning if last is false).
+
+        Raise KeyError if the element does not exist.
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         '''
         link = self.__map[key]
         link_prev = link.prev
@@ -213,7 +257,11 @@ class OrderedDict(dict):
         size += sizeof(self.__root) * n         # proxy objects
         return size
 
+<<<<<<< HEAD
     update = __update = MutableMapping.update
+=======
+    update = __update = _collections_abc.MutableMapping.update
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     def keys(self):
         "D.keys() -> a set-like object providing a view on D's keys"
@@ -227,7 +275,11 @@ class OrderedDict(dict):
         "D.values() -> an object providing a view on D's values"
         return _OrderedDictValuesView(self)
 
+<<<<<<< HEAD
     __ne__ = MutableMapping.__ne__
+=======
+    __ne__ = _collections_abc.MutableMapping.__ne__
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     __marker = object()
 
@@ -246,7 +298,14 @@ class OrderedDict(dict):
         return default
 
     def setdefault(self, key, default=None):
+<<<<<<< HEAD
         'od.setdefault(k[,d]) -> od.get(k,d), also set od[k]=d if k not in od'
+=======
+        '''Insert key with a value of default if key is not in the dictionary.
+
+        Return the value for key if key is in the dictionary, else default.
+        '''
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         if key in self:
             return self[key]
         self[key] = default
@@ -272,9 +331,13 @@ class OrderedDict(dict):
 
     @classmethod
     def fromkeys(cls, iterable, value=None):
+<<<<<<< HEAD
         '''OD.fromkeys(S[, v]) -> New ordered dictionary with keys from S.
         If not specified, the value defaults to None.
 
+=======
+        '''Create a new ordered dictionary with keys from iterable and values set to value.
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         '''
         self = cls()
         for key in iterable:
@@ -302,6 +365,7 @@ except ImportError:
 ### namedtuple
 ################################################################################
 
+<<<<<<< HEAD
 _class_template = """\
 from builtins import property as _property, tuple as _tuple
 from operator import itemgetter as _itemgetter
@@ -355,6 +419,11 @@ _field_template = '''\
 '''
 
 def namedtuple(typename, field_names, *, verbose=False, rename=False, module=None):
+=======
+_nt_itemgetters = {}
+
+def namedtuple(typename, field_names, *, rename=False, defaults=None, module=None):
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     """Returns a new subclass of tuple with named fields.
 
     >>> Point = namedtuple('Point', ['x', 'y'])
@@ -383,7 +452,12 @@ def namedtuple(typename, field_names, *, verbose=False, rename=False, module=Non
     if isinstance(field_names, str):
         field_names = field_names.replace(',', ' ').split()
     field_names = list(map(str, field_names))
+<<<<<<< HEAD
     typename = str(typename)
+=======
+    typename = _sys.intern(str(typename))
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     if rename:
         seen = set()
         for index, name in enumerate(field_names):
@@ -391,21 +465,36 @@ def namedtuple(typename, field_names, *, verbose=False, rename=False, module=Non
                 or _iskeyword(name)
                 or name.startswith('_')
                 or name in seen):
+<<<<<<< HEAD
                 field_names[index] = '_%d' % index
             seen.add(name)
+=======
+                field_names[index] = f'_{index}'
+            seen.add(name)
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     for name in [typename] + field_names:
         if type(name) is not str:
             raise TypeError('Type names and field names must be strings')
         if not name.isidentifier():
             raise ValueError('Type names and field names must be valid '
+<<<<<<< HEAD
                              'identifiers: %r' % name)
         if _iskeyword(name):
             raise ValueError('Type names and field names cannot be a '
                              'keyword: %r' % name)
+=======
+                             f'identifiers: {name!r}')
+        if _iskeyword(name):
+            raise ValueError('Type names and field names cannot be a '
+                             f'keyword: {name!r}')
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     seen = set()
     for name in field_names:
         if name.startswith('_') and not rename:
             raise ValueError('Field names cannot start with an underscore: '
+<<<<<<< HEAD
                              '%r' % name)
         if name in seen:
             raise ValueError('Encountered duplicate field name: %r' % name)
@@ -431,6 +520,104 @@ def namedtuple(typename, field_names, *, verbose=False, rename=False, module=Non
     result._source = class_definition
     if verbose:
         print(result._source)
+=======
+                             f'{name!r}')
+        if name in seen:
+            raise ValueError(f'Encountered duplicate field name: {name!r}')
+        seen.add(name)
+
+    field_defaults = {}
+    if defaults is not None:
+        defaults = tuple(defaults)
+        if len(defaults) > len(field_names):
+            raise TypeError('Got more default values than field names')
+        field_defaults = dict(reversed(list(zip(reversed(field_names),
+                                                reversed(defaults)))))
+
+    # Variables used in the methods and docstrings
+    field_names = tuple(map(_sys.intern, field_names))
+    num_fields = len(field_names)
+    arg_list = repr(field_names).replace("'", "")[1:-1]
+    repr_fmt = '(' + ', '.join(f'{name}=%r' for name in field_names) + ')'
+    tuple_new = tuple.__new__
+    _len = len
+
+    # Create all the named tuple methods to be added to the class namespace
+
+    s = f'def __new__(_cls, {arg_list}): return _tuple_new(_cls, ({arg_list}))'
+    namespace = {'_tuple_new': tuple_new, '__name__': f'namedtuple_{typename}'}
+    # Note: exec() has the side-effect of interning the field names
+    exec(s, namespace)
+    __new__ = namespace['__new__']
+    __new__.__doc__ = f'Create new instance of {typename}({arg_list})'
+    if defaults is not None:
+        __new__.__defaults__ = defaults
+
+    @classmethod
+    def _make(cls, iterable):
+        result = tuple_new(cls, iterable)
+        if _len(result) != num_fields:
+            raise TypeError(f'Expected {num_fields} arguments, got {len(result)}')
+        return result
+
+    _make.__func__.__doc__ = (f'Make a new {typename} object from a sequence '
+                              'or iterable')
+
+    def _replace(_self, **kwds):
+        result = _self._make(map(kwds.pop, field_names, _self))
+        if kwds:
+            raise ValueError(f'Got unexpected field names: {list(kwds)!r}')
+        return result
+
+    _replace.__doc__ = (f'Return a new {typename} object replacing specified '
+                        'fields with new values')
+
+    def __repr__(self):
+        'Return a nicely formatted representation string'
+        return self.__class__.__name__ + repr_fmt % self
+
+    def _asdict(self):
+        'Return a new OrderedDict which maps field names to their values.'
+        return OrderedDict(zip(self._fields, self))
+
+    def __getnewargs__(self):
+        'Return self as a plain tuple.  Used by copy and pickle.'
+        return tuple(self)
+
+    # Modify function metadata to help with introspection and debugging
+
+    for method in (__new__, _make.__func__, _replace,
+                   __repr__, _asdict, __getnewargs__):
+        method.__qualname__ = f'{typename}.{method.__name__}'
+
+    # Build-up the class namespace dictionary
+    # and use type() to build the result class
+    class_namespace = {
+        '__doc__': f'{typename}({arg_list})',
+        '__slots__': (),
+        '_fields': field_names,
+        '_field_defaults': field_defaults,
+        # alternate spelling for backward compatibility
+        '_fields_defaults': field_defaults,
+        '__new__': __new__,
+        '_make': _make,
+        '_replace': _replace,
+        '__repr__': __repr__,
+        '_asdict': _asdict,
+        '__getnewargs__': __getnewargs__,
+    }
+    cache = _nt_itemgetters
+    for index, name in enumerate(field_names):
+        try:
+            itemgetter_object, doc = cache[index]
+        except KeyError:
+            itemgetter_object = _itemgetter(index)
+            doc = f'Alias for field number {index}'
+            cache[index] = itemgetter_object, doc
+        class_namespace[name] = property(itemgetter_object, doc=doc)
+
+    result = type(typename, (tuple,), class_namespace)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     # For pickling to work, the __module__ variable needs to be set to the frame
     # where the named tuple is created.  Bypass this step in environments where
@@ -611,7 +798,11 @@ class Counter(dict):
             raise TypeError('expected at most 1 arguments, got %d' % len(args))
         iterable = args[0] if args else None
         if iterable is not None:
+<<<<<<< HEAD
             if isinstance(iterable, Mapping):
+=======
+            if isinstance(iterable, _collections_abc.Mapping):
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
                 if self:
                     self_get = self.get
                     for elem, count in iterable.items():
@@ -648,7 +839,11 @@ class Counter(dict):
         iterable = args[0] if args else None
         if iterable is not None:
             self_get = self.get
+<<<<<<< HEAD
             if isinstance(iterable, Mapping):
+=======
+            if isinstance(iterable, _collections_abc.Mapping):
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
                 for elem, count in iterable.items():
                     self[elem] = self_get(elem, 0) - count
             else:
@@ -850,7 +1045,11 @@ class Counter(dict):
 ###  ChainMap
 ########################################################################
 
+<<<<<<< HEAD
 class ChainMap(MutableMapping):
+=======
+class ChainMap(_collections_abc.MutableMapping):
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     ''' A ChainMap groups multiple dicts (or other mappings) together
     to create a single, updateable view.
 
@@ -889,7 +1088,14 @@ class ChainMap(MutableMapping):
         return len(set().union(*self.maps))     # reuses stored hash values if possible
 
     def __iter__(self):
+<<<<<<< HEAD
         return iter(set().union(*self.maps))
+=======
+        d = {}
+        for mapping in reversed(self.maps):
+            d.update(mapping)                   # reuses stored hash values if possible
+        return iter(d)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     def __contains__(self, key):
         return any(key in m for m in self.maps)
@@ -958,7 +1164,11 @@ class ChainMap(MutableMapping):
 ### UserDict
 ################################################################################
 
+<<<<<<< HEAD
 class UserDict(MutableMapping):
+=======
+class UserDict(_collections_abc.MutableMapping):
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     # Start by filling-out the abstract methods
     def __init__(*args, **kwargs):
@@ -1000,6 +1210,16 @@ class UserDict(MutableMapping):
 
     # Now, add the methods in dicts but not in MutableMapping
     def __repr__(self): return repr(self.data)
+<<<<<<< HEAD
+=======
+    def __copy__(self):
+        inst = self.__class__.__new__(self.__class__)
+        inst.__dict__.update(self.__dict__)
+        # Create a copy and avoid triggering descriptors
+        inst.__dict__["data"] = self.__dict__["data"].copy()
+        return inst
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     def copy(self):
         if self.__class__ is UserDict:
             return UserDict(self.data.copy())
@@ -1012,6 +1232,10 @@ class UserDict(MutableMapping):
             self.data = data
         c.update(self)
         return c
+<<<<<<< HEAD
+=======
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     @classmethod
     def fromkeys(cls, iterable, value=None):
         d = cls()
@@ -1025,7 +1249,11 @@ class UserDict(MutableMapping):
 ### UserList
 ################################################################################
 
+<<<<<<< HEAD
 class UserList(MutableSequence):
+=======
+class UserList(_collections_abc.MutableSequence):
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     """A more or less complete user-defined wrapper around list objects."""
     def __init__(self, initlist=None):
         self.data = []
@@ -1047,7 +1275,15 @@ class UserList(MutableSequence):
         return other.data if isinstance(other, UserList) else other
     def __contains__(self, item): return item in self.data
     def __len__(self): return len(self.data)
+<<<<<<< HEAD
     def __getitem__(self, i): return self.data[i]
+=======
+    def __getitem__(self, i):
+        if isinstance(i, slice):
+            return self.__class__(self.data[i])
+        else:
+            return self.data[i]
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     def __setitem__(self, i, item): self.data[i] = item
     def __delitem__(self, i): del self.data[i]
     def __add__(self, other):
@@ -1076,6 +1312,15 @@ class UserList(MutableSequence):
     def __imul__(self, n):
         self.data *= n
         return self
+<<<<<<< HEAD
+=======
+    def __copy__(self):
+        inst = self.__class__.__new__(self.__class__)
+        inst.__dict__.update(self.__dict__)
+        # Create a copy and avoid triggering descriptors
+        inst.__dict__["data"] = self.__dict__["data"][:]
+        return inst
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     def append(self, item): self.data.append(item)
     def insert(self, i, item): self.data.insert(i, item)
     def pop(self, i=-1): return self.data.pop(i)
@@ -1098,7 +1343,11 @@ class UserList(MutableSequence):
 ### UserString
 ################################################################################
 
+<<<<<<< HEAD
 class UserString(Sequence):
+=======
+class UserString(_collections_abc.Sequence):
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     def __init__(self, seq):
         if isinstance(seq, str):
             self.data = seq
@@ -1193,6 +1442,10 @@ class UserString(Sequence):
         return self.data.index(sub, start, end)
     def isalpha(self): return self.data.isalpha()
     def isalnum(self): return self.data.isalnum()
+<<<<<<< HEAD
+=======
+    def isascii(self): return self.data.isascii()
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     def isdecimal(self): return self.data.isdecimal()
     def isdigit(self): return self.data.isdigit()
     def isidentifier(self): return self.data.isidentifier()

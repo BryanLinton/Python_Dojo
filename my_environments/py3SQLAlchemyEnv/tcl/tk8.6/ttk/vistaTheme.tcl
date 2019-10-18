@@ -21,6 +21,10 @@ namespace eval ttk::theme::vista {
 	    -foreground SystemWindowText \
 	    -selectforeground SystemHighlightText \
 	    -selectbackground SystemHighlight \
+<<<<<<< HEAD
+=======
+	    -insertcolor SystemWindowText \
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 	    -font TkDefaultFont \
 	    ;
 
@@ -46,20 +50,39 @@ namespace eval ttk::theme::vista {
 	ttk::style configure Heading -font TkHeadingFont
 	ttk::style configure Treeview -background SystemWindow
 	ttk::style map Treeview \
+<<<<<<< HEAD
 	    -background [list selected SystemHighlight] \
 	    -foreground [list selected SystemHighlightText] ;
 
         # Label and Toolbutton
 	ttk::style configure TLabelframe.Label -foreground "#0046d5"
+=======
+	    -background [list   disabled SystemButtonFace \
+				{!disabled !selected} SystemWindow \
+				selected SystemHighlight] \
+	    -foreground [list   disabled SystemGrayText \
+				{!disabled !selected} SystemWindowText \
+				selected SystemHighlightText]
+
+        # Label and Toolbutton
+	ttk::style configure TLabelframe.Label -foreground SystemButtonText
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 	ttk::style configure Toolbutton -padding {4 4}
 
         # Combobox
 	ttk::style configure TCombobox -padding 2
+<<<<<<< HEAD
         ttk::style element create Combobox.field vsapi \
             COMBOBOX 2 {{} 1}
         ttk::style element create Combobox.border vsapi \
             COMBOBOX 4 {disabled 4 focus 3 active 2 hover 2 {} 1}
+=======
+        ttk::style element create Combobox.border vsapi \
+            COMBOBOX 4 {disabled 4 focus 3 active 2 hover 2 {} 1}
+        ttk::style element create Combobox.background vsapi \
+            EDIT 3 {disabled 3 readonly 5 focus 4 hover 2 {} 1}
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         ttk::style element create Combobox.rightdownarrow vsapi \
             COMBOBOX 6 {disabled 4 pressed 3 active 2 {} 1} \
             -syssize {SM_CXVSCROLL SM_CYVSCROLL}
@@ -67,8 +90,15 @@ namespace eval ttk::theme::vista {
             Combobox.border -sticky nswe -border 0 -children {
                 Combobox.rightdownarrow -side right -sticky ns
                 Combobox.padding -expand 1 -sticky nswe -children {
+<<<<<<< HEAD
                     Combobox.focus -expand 1 -sticky nswe -children {
                         Combobox.textarea -sticky nswe
+=======
+                    Combobox.background -sticky nswe -children {
+                        Combobox.focus -expand 1 -sticky nswe -children {
+                            Combobox.textarea -sticky nswe
+                        }
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
                     }
                 }
             }
@@ -133,7 +163,11 @@ namespace eval ttk::theme::vista {
                 Spinbox.background -sticky news -children {
                     Spinbox.padding -sticky news -children {
                         Spinbox.innerbg -sticky news -children {
+<<<<<<< HEAD
                             Spinbox.textarea -expand 1 -sticky {}
+=======
+                            Spinbox.textarea -expand 1
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
                         }
                     }
                     Spinbox.uparrow -side top -sticky ens

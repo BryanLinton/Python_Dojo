@@ -27,6 +27,7 @@ typedef struct _frame {
        to the current stack top. */
     PyObject **f_stacktop;
     PyObject *f_trace;          /* Trace function */
+<<<<<<< HEAD
 
     /* In a generator, we need to be able to swap between the exception
        state inside the generator and the exception state of the calling
@@ -36,6 +37,11 @@ typedef struct _frame {
        non-generator frames. See the save_exc_state and swap_exc_state
        functions in ceval.c for details of their use. */
     PyObject *f_exc_type, *f_exc_value, *f_exc_traceback;
+=======
+    char f_trace_lines;         /* Emit per-line trace events? */
+    char f_trace_opcodes;       /* Emit per-opcode trace events? */
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     /* Borrowed reference to a generator, or NULL */
     PyObject *f_gen;
 
@@ -60,7 +66,15 @@ PyAPI_DATA(PyTypeObject) PyFrame_Type;
 #define PyFrame_Check(op) (Py_TYPE(op) == &PyFrame_Type)
 
 PyAPI_FUNC(PyFrameObject *) PyFrame_New(PyThreadState *, PyCodeObject *,
+<<<<<<< HEAD
                                        PyObject *, PyObject *);
+=======
+                                        PyObject *, PyObject *);
+
+/* only internal use */
+PyFrameObject* _PyFrame_New_NoTrack(PyThreadState *, PyCodeObject *,
+                                    PyObject *, PyObject *);
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 
 /* The rest of the interface is specific for frame objects */

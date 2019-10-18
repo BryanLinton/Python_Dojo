@@ -28,7 +28,11 @@ def _deactivate(args):
 _deactivate(["nondestructive"])
 aliases["deactivate"] = _deactivate
 
+<<<<<<< HEAD
 $VIRTUAL_ENV = r"C:\Users\MFC\Desktop\Python_Dojo\my_environments\py3SQLAlchemyEnv"
+=======
+$VIRTUAL_ENV = r"C:\Users\bryanl\Desktop\python_stack\my_environments\py3SQLAlchemyEnv"
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 $_OLD_VIRTUAL_PATH = $PATH
 $PATH = $PATH[:]

@@ -1,6 +1,10 @@
 @echo off
 
+<<<<<<< HEAD
 set "VIRTUAL_ENV=C:\Users\MFC\Desktop\Python_Dojo\my_environments\py3SQLAlchemyEnv"
+=======
+set "VIRTUAL_ENV=C:\Users\bryanl\Desktop\python_stack\my_environments\py3SQLAlchemyEnv"
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"

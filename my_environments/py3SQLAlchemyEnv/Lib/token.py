@@ -63,11 +63,23 @@ AT = 49
 ATEQUAL = 50
 RARROW = 51
 ELLIPSIS = 52
+<<<<<<< HEAD
 OP = 53
 AWAIT = 54
 ASYNC = 55
 ERRORTOKEN = 56
 N_TOKENS = 57
+=======
+# Don't forget to update the table _PyParser_TokenNames in tokenizer.c!
+OP = 53
+ERRORTOKEN = 54
+# These aren't used by the C tokenizer but are needed for tokenize.py
+COMMENT = 55
+NL = 56
+ENCODING = 57
+N_TOKENS = 58
+# Special definitions for cooperation with parser
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 NT_OFFSET = 256
 #--end constants--
 
@@ -102,15 +114,36 @@ def _main():
     with fp:
         lines = fp.read().split("\n")
     prog = re.compile(
+<<<<<<< HEAD
         "#define[ \t][ \t]*([A-Z0-9][A-Z0-9_]*)[ \t][ \t]*([0-9][0-9]*)",
         re.IGNORECASE)
     tokens = {}
+=======
+        r"#define[ \t][ \t]*([A-Z0-9][A-Z0-9_]*)[ \t][ \t]*([0-9][0-9]*)",
+        re.IGNORECASE)
+    comment_regex = re.compile(
+        r"^\s*/\*\s*(.+?)\s*\*/\s*$",
+        re.IGNORECASE)
+
+    tokens = {}
+    prev_val = None
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     for line in lines:
         match = prog.match(line)
         if match:
             name, val = match.group(1, 2)
             val = int(val)
+<<<<<<< HEAD
             tokens[val] = name          # reverse so we can sort them...
+=======
+            tokens[val] = {'token': name}          # reverse so we can sort them...
+            prev_val = val
+        else:
+            comment_match = comment_regex.match(line)
+            if comment_match and prev_val is not None:
+                comment = comment_match.group(1)
+                tokens[prev_val]['comment'] = comment
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     keys = sorted(tokens.keys())
     # load the output skeleton from the target:
     try:
@@ -127,8 +160,15 @@ def _main():
         sys.stderr.write("target does not contain format markers")
         sys.exit(3)
     lines = []
+<<<<<<< HEAD
     for val in keys:
         lines.append("%s = %d" % (tokens[val], val))
+=======
+    for key in keys:
+        lines.append("%s = %d" % (tokens[key]["token"], key))
+        if "comment" in tokens[key]:
+            lines.append("# %s" % tokens[key]["comment"])
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     format[start:end] = lines
     try:
         fp = open(outFileName, 'w')

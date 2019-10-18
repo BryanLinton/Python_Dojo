@@ -12,6 +12,7 @@
 #endif
 #endif /* __APPLE__ */
 
+<<<<<<< HEAD
 #ifdef __FreeBSD__
 /*
 ** On FreeBSD, [n]curses.h and stdlib.h/wchar.h use different guards
@@ -37,6 +38,17 @@
 #endif
 #endif
 #endif
+=======
+/* On FreeBSD, [n]curses.h and stdlib.h/wchar.h use different guards
+   against multiple definition of wchar_t and wint_t. */
+#if defined(__FreeBSD__) && defined(_XOPEN_SOURCE_EXTENDED)
+# ifndef __wchar_t
+#   define __wchar_t
+# endif
+# ifndef __wint_t
+#   define __wint_t
+# endif
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 #endif
 
 #if !defined(HAVE_CURSES_IS_PAD) && defined(WINDOW_HAS_FLAGS)
@@ -155,19 +167,29 @@ static PyObject *PyCurses_ ## X (PyObject *self) \
 { \
   PyCursesInitialised \
   if (X () == FALSE) { \
+<<<<<<< HEAD
     Py_INCREF(Py_False); \
     return Py_False; \
   } \
   Py_INCREF(Py_True); \
   return Py_True; }
+=======
+    Py_RETURN_FALSE; \
+  } \
+  Py_RETURN_TRUE; }
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 #define NoArgNoReturnVoidFunction(X) \
 static PyObject *PyCurses_ ## X (PyObject *self) \
 { \
   PyCursesInitialised \
   X(); \
+<<<<<<< HEAD
   Py_INCREF(Py_None); \
   return Py_None; }
+=======
+  Py_RETURN_NONE; }
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 #ifdef __cplusplus
 }

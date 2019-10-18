@@ -7,6 +7,7 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 #define PyCF_MASK (CO_FUTURE_DIVISION | CO_FUTURE_ABSOLUTE_IMPORT | \
                    CO_FUTURE_WITH_STATEMENT | CO_FUTURE_PRINT_FUNCTION | \
                    CO_FUTURE_UNICODE_LITERALS | CO_FUTURE_BARRY_AS_BDFL | \
@@ -23,6 +24,8 @@ typedef struct {
 } PyCompilerFlags;
 #endif
 
+=======
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(int) PyRun_SimpleStringFlags(const char *, PyCompilerFlags *);
 PyAPI_FUNC(int) PyRun_AnyFileFlags(FILE *, const char *, PyCompilerFlags *);

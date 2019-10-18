@@ -13,6 +13,10 @@ try:
 except ImportError as exc:
     _frozen_importlib_external = _bootstrap_external
 import abc
+<<<<<<< HEAD
+=======
+import warnings
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 
 def _register(abstract_cls, *classes):
@@ -34,6 +38,11 @@ class Finder(metaclass=abc.ABCMeta):
     reimplementations of the import system.  Otherwise, finder
     implementations should derive from the more specific MetaPathFinder
     or PathEntryFinder ABCs.
+<<<<<<< HEAD
+=======
+
+    Deprecated since Python 3.3
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     """
 
     @abc.abstractmethod
@@ -57,11 +66,24 @@ class MetaPathFinder(Finder):
         If no module is found, return None.  The fullname is a str and
         the path is a list of strings or None.
 
+<<<<<<< HEAD
         This method is deprecated in favor of finder.find_spec(). If find_spec()
         exists then backwards-compatible functionality is provided for this
         method.
 
         """
+=======
+        This method is deprecated since Python 3.4 in favor of
+        finder.find_spec(). If find_spec() exists then backwards-compatible
+        functionality is provided for this method.
+
+        """
+        warnings.warn("MetaPathFinder.find_module() is deprecated since Python "
+                      "3.4 in favor of MetaPathFinder.find_spec() "
+                      "(available since 3.4)",
+                      DeprecationWarning,
+                      stacklevel=2)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         if not hasattr(self, 'find_spec'):
             return None
         found = self.find_spec(fullname, path)
@@ -94,10 +116,22 @@ class PathEntryFinder(Finder):
         The portion will be discarded if another path entry finder
         locates the module as a normal module or package.
 
+<<<<<<< HEAD
         This method is deprecated in favor of finder.find_spec(). If find_spec()
         is provided than backwards-compatible functionality is provided.
 
         """
+=======
+        This method is deprecated since Python 3.4 in favor of
+        finder.find_spec(). If find_spec() is provided than backwards-compatible
+        functionality is provided.
+        """
+        warnings.warn("PathEntryFinder.find_loader() is deprecated since Python "
+                      "3.4 in favor of PathEntryFinder.find_spec() "
+                      "(available since 3.4)",
+                      DeprecationWarning,
+                      stacklevel=2)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         if not hasattr(self, 'find_spec'):
             return None, []
         found = self.find_spec(fullname)
@@ -180,7 +214,11 @@ class ResourceLoader(Loader):
     def get_data(self, path):
         """Abstract method which when implemented should return the bytes for
         the specified path.  The path must be a str."""
+<<<<<<< HEAD
         raise IOError
+=======
+        raise OSError
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 
 class InspectLoader(Loader):
@@ -302,7 +340,11 @@ class SourceLoader(_bootstrap_external.SourceLoader, ResourceLoader, ExecutionLo
     def path_mtime(self, path):
         """Return the (int) modification time for the path (str)."""
         if self.path_stats.__func__ is SourceLoader.path_stats:
+<<<<<<< HEAD
             raise IOError
+=======
+            raise OSError
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         return int(self.path_stats(path)['mtime'])
 
     def path_stats(self, path):
@@ -313,7 +355,11 @@ class SourceLoader(_bootstrap_external.SourceLoader, ResourceLoader, ExecutionLo
         - 'size' (optional) is the size in bytes of the source code.
         """
         if self.path_mtime.__func__ is SourceLoader.path_mtime:
+<<<<<<< HEAD
             raise IOError
+=======
+            raise OSError
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         return {'mtime': self.path_mtime(path)}
 
     def set_data(self, path, data):
@@ -327,3 +373,52 @@ class SourceLoader(_bootstrap_external.SourceLoader, ResourceLoader, ExecutionLo
         """
 
 _register(SourceLoader, machinery.SourceFileLoader)
+<<<<<<< HEAD
+=======
+
+
+class ResourceReader(metaclass=abc.ABCMeta):
+
+    """Abstract base class to provide resource-reading support.
+
+    Loaders that support resource reading are expected to implement
+    the ``get_resource_reader(fullname)`` method and have it either return None
+    or an object compatible with this ABC.
+    """
+
+    @abc.abstractmethod
+    def open_resource(self, resource):
+        """Return an opened, file-like object for binary reading.
+
+        The 'resource' argument is expected to represent only a file name
+        and thus not contain any subdirectory components.
+
+        If the resource cannot be found, FileNotFoundError is raised.
+        """
+        raise FileNotFoundError
+
+    @abc.abstractmethod
+    def resource_path(self, resource):
+        """Return the file system path to the specified resource.
+
+        The 'resource' argument is expected to represent only a file name
+        and thus not contain any subdirectory components.
+
+        If the resource does not exist on the file system, raise
+        FileNotFoundError.
+        """
+        raise FileNotFoundError
+
+    @abc.abstractmethod
+    def is_resource(self, name):
+        """Return True if the named 'name' is consider a resource."""
+        raise FileNotFoundError
+
+    @abc.abstractmethod
+    def contents(self):
+        """Return an iterable of strings over the contents of the package."""
+        return []
+
+
+_register(ResourceReader, machinery.SourceFileLoader)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98

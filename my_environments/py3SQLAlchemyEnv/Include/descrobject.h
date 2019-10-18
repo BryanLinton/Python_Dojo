@@ -9,10 +9,17 @@ typedef PyObject *(*getter)(PyObject *, void *);
 typedef int (*setter)(PyObject *, PyObject *, void *);
 
 typedef struct PyGetSetDef {
+<<<<<<< HEAD
     char *name;
     getter get;
     setter set;
     char *doc;
+=======
+    const char *name;
+    getter get;
+    setter set;
+    const char *doc;
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     void *closure;
 } PyGetSetDef;
 
@@ -24,11 +31,19 @@ typedef PyObject *(*wrapperfunc_kwds)(PyObject *self, PyObject *args,
                                       void *wrapped, PyObject *kwds);
 
 struct wrapperbase {
+<<<<<<< HEAD
     char *name;
     int offset;
     void *function;
     wrapperfunc wrapper;
     char *doc;
+=======
+    const char *name;
+    int offset;
+    void *function;
+    wrapperfunc wrapper;
+    const char *doc;
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     int flags;
     PyObject *name_strobj;
 };
@@ -90,6 +105,12 @@ PyAPI_FUNC(PyObject *) PyDescr_NewMember(PyTypeObject *,
 PyAPI_FUNC(PyObject *) PyDescr_NewGetSet(PyTypeObject *,
                                                struct PyGetSetDef *);
 #ifndef Py_LIMITED_API
+<<<<<<< HEAD
+=======
+
+PyAPI_FUNC(PyObject *) _PyMethodDescr_FastCallKeywords(
+        PyObject *descrobj, PyObject *const *stack, Py_ssize_t nargs, PyObject *kwnames);
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 PyAPI_FUNC(PyObject *) PyDescr_NewWrapper(PyTypeObject *,
                                                 struct wrapperbase *, void *);
 #define PyDescr_IsData(d) (Py_TYPE(d)->tp_descr_set != NULL)

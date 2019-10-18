@@ -8,6 +8,7 @@ extern "C" {
 #endif
 
 typedef struct PyStructSequence_Field {
+<<<<<<< HEAD
     char *name;
     char *doc;
 } PyStructSequence_Field;
@@ -15,6 +16,15 @@ typedef struct PyStructSequence_Field {
 typedef struct PyStructSequence_Desc {
     char *name;
     char *doc;
+=======
+    const char *name;
+    const char *doc;
+} PyStructSequence_Field;
+
+typedef struct PyStructSequence_Desc {
+    const char *name;
+    const char *doc;
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     struct PyStructSequence_Field *fields;
     int n_in_sequence;
 } PyStructSequence_Desc;

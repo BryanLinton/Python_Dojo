@@ -19,6 +19,7 @@ except ImportError:
     pass
 from abc import get_cache_token
 from collections import namedtuple
+<<<<<<< HEAD
 from types import MappingProxyType
 from weakref import WeakKeyDictionary
 from reprlib import recursive_repr
@@ -29,6 +30,11 @@ except ImportError:
         'Dummy reentrant lock for builds without threads'
         def __enter__(self): pass
         def __exit__(self, exctype, excinst, exctb): pass
+=======
+# import types, weakref  # Deferred to single_dispatch()
+from reprlib import recursive_repr
+from _thread import RLock
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 
 ################################################################################
@@ -193,7 +199,11 @@ _convert = {
 def total_ordering(cls):
     """Class decorator that fills in missing ordering methods"""
     # Find user-defined comparisons (not those inherited from object).
+<<<<<<< HEAD
     roots = [op for op in _convert if getattr(cls, op, None) is not getattr(object, op, None)]
+=======
+    roots = {op for op in _convert if getattr(cls, op, None) is not getattr(object, op, None)}
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     if not roots:
         raise ValueError('must define at least one ordering operation: < > <= >=')
     root = max(roots)       # prefer __lt__ to __le__ to __gt__ to __ge__
@@ -330,7 +340,24 @@ class partialmethod(object):
     callables as instance methods.
     """
 
+<<<<<<< HEAD
     def __init__(self, func, *args, **keywords):
+=======
+    def __init__(*args, **keywords):
+        if len(args) >= 2:
+            self, func, *args = args
+        elif not args:
+            raise TypeError("descriptor '__init__' of partialmethod "
+                            "needs an argument")
+        elif 'func' in keywords:
+            func = keywords.pop('func')
+            self, *args = args
+        else:
+            raise TypeError("type 'partialmethod' takes at least one argument, "
+                            "got %d" % (len(args)-1))
+        args = tuple(args)
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         if not callable(func) and not hasattr(func, "__get__"):
             raise TypeError("{!r} is not callable or a descriptor"
                                  .format(func))
@@ -420,7 +447,11 @@ class _HashedSeq(list):
 
 def _make_key(args, kwds, typed,
              kwd_mark = (object(),),
+<<<<<<< HEAD
              fasttypes = {int, str, frozenset, type(None)},
+=======
+             fasttypes = {int, str},
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
              tuple=tuple, type=type, len=len):
     """Make a cache key from optionally typed positional and keyword arguments
 
@@ -432,6 +463,13 @@ def _make_key(args, kwds, typed,
     saves space and improves lookup speed.
 
     """
+<<<<<<< HEAD
+=======
+    # All of code below relies on kwds preserving the order input by the user.
+    # Formerly, we sorted() the kwds before looping.  The new way is *much*
+    # faster; however, it means that f(x=1, y=2) will now be treated as a
+    # distinct call from f(y=2, x=1) which will be cached separately.
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     key = args
     if kwds:
         key += kwd_mark
@@ -461,7 +499,11 @@ def lru_cache(maxsize=128, typed=False):
     with f.cache_info().  Clear the cache and statistics with f.cache_clear().
     Access the underlying function with f.__wrapped__.
 
+<<<<<<< HEAD
     See:  http://en.wikipedia.org/wiki/Cache_algorithms#Least_Recently_Used
+=======
+    See:  http://en.wikipedia.org/wiki/Cache_replacement_policies#Least_recently_used_(LRU)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     """
 
@@ -472,8 +514,16 @@ def lru_cache(maxsize=128, typed=False):
 
     # Early detection of an erroneous call to @lru_cache without any arguments
     # resulting in the inner function being passed to maxsize instead of an
+<<<<<<< HEAD
     # integer or None.
     if maxsize is not None and not isinstance(maxsize, int):
+=======
+    # integer or None.  Negative maxsize is treated as 0.
+    if isinstance(maxsize, int):
+        if maxsize < 0:
+            maxsize = 0
+    elif maxsize is not None:
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         raise TypeError('Expected maxsize to be an integer or None')
 
     def decorating_function(user_function):
@@ -500,10 +550,17 @@ def _lru_cache_wrapper(user_function, maxsize, typed, _CacheInfo):
     if maxsize == 0:
 
         def wrapper(*args, **kwds):
+<<<<<<< HEAD
             # No caching -- just a statistics update after a successful call
             nonlocal misses
             result = user_function(*args, **kwds)
             misses += 1
+=======
+            # No caching -- just a statistics update
+            nonlocal misses
+            misses += 1
+            result = user_function(*args, **kwds)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
             return result
 
     elif maxsize is None:
@@ -516,9 +573,15 @@ def _lru_cache_wrapper(user_function, maxsize, typed, _CacheInfo):
             if result is not sentinel:
                 hits += 1
                 return result
+<<<<<<< HEAD
             result = user_function(*args, **kwds)
             cache[key] = result
             misses += 1
+=======
+            misses += 1
+            result = user_function(*args, **kwds)
+            cache[key] = result
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
             return result
 
     else:
@@ -540,6 +603,10 @@ def _lru_cache_wrapper(user_function, maxsize, typed, _CacheInfo):
                     link[NEXT] = root
                     hits += 1
                     return result
+<<<<<<< HEAD
+=======
+                misses += 1
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
             result = user_function(*args, **kwds)
             with lock:
                 if key in cache:
@@ -577,7 +644,10 @@ def _lru_cache_wrapper(user_function, maxsize, typed, _CacheInfo):
                     # Use the cache_len bound method instead of the len() function
                     # which could potentially be wrapped in an lru_cache itself.
                     full = (cache_len() >= maxsize)
+<<<<<<< HEAD
                 misses += 1
+=======
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
             return result
 
     def cache_info():
@@ -755,10 +825,21 @@ def singledispatch(func):
     function acts as the default implementation, and additional
     implementations can be registered using the register() attribute of the
     generic function.
+<<<<<<< HEAD
 
     """
     registry = {}
     dispatch_cache = WeakKeyDictionary()
+=======
+    """
+    # There are many programs that use functools without singledispatch, so we
+    # trade-off making singledispatch marginally slower for the benefit of
+    # making start-up of such applications slightly faster.
+    import types, weakref
+
+    registry = {}
+    dispatch_cache = weakref.WeakKeyDictionary()
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     cache_token = None
 
     def dispatch(cls):
@@ -792,7 +873,27 @@ def singledispatch(func):
         """
         nonlocal cache_token
         if func is None:
+<<<<<<< HEAD
             return lambda f: register(cls, f)
+=======
+            if isinstance(cls, type):
+                return lambda f: register(cls, f)
+            ann = getattr(cls, '__annotations__', {})
+            if not ann:
+                raise TypeError(
+                    f"Invalid first argument to `register()`: {cls!r}. "
+                    f"Use either `@register(some_class)` or plain `@register` "
+                    f"on an annotated function."
+                )
+            func = cls
+
+            # only import typing if annotation parsing is necessary
+            from typing import get_type_hints
+            argname, cls = next(iter(get_type_hints(func).items()))
+            assert isinstance(cls, type), (
+                f"Invalid annotation for {argname!r}. {cls!r} is not a class."
+            )
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         registry[cls] = func
         if cache_token is None and hasattr(cls, '__abstractmethods__'):
             cache_token = get_cache_token()
@@ -800,12 +901,26 @@ def singledispatch(func):
         return func
 
     def wrapper(*args, **kw):
+<<<<<<< HEAD
         return dispatch(args[0].__class__)(*args, **kw)
 
     registry[object] = func
     wrapper.register = register
     wrapper.dispatch = dispatch
     wrapper.registry = MappingProxyType(registry)
+=======
+        if not args:
+            raise TypeError(f'{funcname} requires at least '
+                            '1 positional argument')
+
+        return dispatch(args[0].__class__)(*args, **kw)
+
+    funcname = getattr(func, '__name__', 'singledispatch function')
+    registry[object] = func
+    wrapper.register = register
+    wrapper.dispatch = dispatch
+    wrapper.registry = types.MappingProxyType(registry)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     wrapper._clear_cache = dispatch_cache.clear
     update_wrapper(wrapper, func)
     return wrapper

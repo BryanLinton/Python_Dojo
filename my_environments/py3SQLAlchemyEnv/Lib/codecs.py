@@ -5,9 +5,16 @@ Written by Marc-Andre Lemburg (mal@lemburg.com).
 
 (c) Copyright CNRI, All Rights Reserved. NO WARRANTY.
 
+<<<<<<< HEAD
 """#"
 
 import builtins, sys
+=======
+"""
+
+import builtins
+import sys
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 ### Registry and builtin stateless codec functions
 
@@ -741,7 +748,11 @@ class StreamReaderWriter:
         """
         return getattr(self.stream, name)
 
+<<<<<<< HEAD
     # these are needed to make "with codecs.open(...)" work properly
+=======
+    # these are needed to make "with StreamReaderWriter(...)" work properly
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     def __enter__(self):
         return self
@@ -837,7 +848,11 @@ class StreamRecoder:
 
     def writelines(self, list):
 
+<<<<<<< HEAD
         data = ''.join(list)
+=======
+        data = b''.join(list)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         data, bytesdecoded = self.decode(data, self.errors)
         return self.writer.write(data)
 
@@ -846,6 +861,15 @@ class StreamRecoder:
         self.reader.reset()
         self.writer.reset()
 
+<<<<<<< HEAD
+=======
+    def seek(self, offset, whence=0):
+        # Seeks must be propagated to both the readers and writers
+        # as they might need to reset their internal buffers.
+        self.reader.seek(offset, whence)
+        self.writer.seek(offset, whence)
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     def __getattr__(self, name,
                     getattr=getattr):
 

@@ -56,6 +56,13 @@ PyErr_WarnExplicitFormat(PyObject *category,
 #define PyErr_Warn(category, msg) PyErr_WarnEx(category, msg, 1)
 #endif
 
+<<<<<<< HEAD
+=======
+#ifndef Py_LIMITED_API
+void _PyErr_WarnUnawaitedCoroutine(PyObject *coro);
+#endif
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 #ifdef __cplusplus
 }
 #endif

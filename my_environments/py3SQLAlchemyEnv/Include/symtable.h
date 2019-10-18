@@ -60,7 +60,10 @@ typedef struct _symtable_entry {
     int ste_col_offset;      /* offset of first line of block */
     int ste_opt_lineno;      /* lineno of last exec or import * */
     int ste_opt_col_offset;  /* offset of last exec or import * */
+<<<<<<< HEAD
     int ste_tmpname;         /* counter for listcomp temp vars */
+=======
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     struct symtable *ste_table;
 } PySTEntryObject;
 

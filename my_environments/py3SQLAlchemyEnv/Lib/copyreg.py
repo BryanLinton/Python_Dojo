@@ -70,7 +70,11 @@ def _reduce_ex(self, proto):
     except AttributeError:
         if getattr(self, "__slots__", None):
             raise TypeError("a class that defines __slots__ without "
+<<<<<<< HEAD
                             "defining __getstate__ cannot be pickled")
+=======
+                            "defining __getstate__ cannot be pickled") from None
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         try:
             dict = self.__dict__
         except AttributeError:

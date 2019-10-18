@@ -31,8 +31,11 @@
 
 version     = "0.9.0"
 __author__  = "Lars Gust\u00e4bel (lars@gustaebel.de)"
+<<<<<<< HEAD
 __date__    = "$Date: 2011-02-25 17:42:01 +0200 (Fri, 25 Feb 2011) $"
 __cvsid__   = "$Id: tarfile.py 88586 2011-02-25 15:42:01Z marc-andre.lemburg $"
+=======
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 __credits__ = "Gustavo Niemeyer, Niels Gust\u00e4bel, Richard Townsend."
 
 #---------
@@ -202,8 +205,14 @@ def itn(n, digits=8, format=DEFAULT_FORMAT):
     # base-256 representation. This allows values up to (256**(digits-1))-1.
     # A 0o200 byte indicates a positive number, a 0o377 byte a negative
     # number.
+<<<<<<< HEAD
     if 0 <= n < 8 ** (digits - 1):
         s = bytes("%0*o" % (digits - 1, int(n)), "ascii") + NUL
+=======
+    n = int(n)
+    if 0 <= n < 8 ** (digits - 1):
+        s = bytes("%0*o" % (digits - 1, n), "ascii") + NUL
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     elif format == GNU_FORMAT and -256 ** (digits - 1) <= n < 256 ** (digits - 1):
         if n >= 0:
             s = bytearray([0o200])
@@ -533,7 +542,11 @@ class _Stream:
                 if not buf:
                     break
                 t.append(buf)
+<<<<<<< HEAD
             buf = "".join(t)
+=======
+            buf = b"".join(t)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         else:
             buf = self._read(size)
         self.pos += len(buf)
@@ -546,6 +559,10 @@ class _Stream:
             return self.__read(size)
 
         c = len(self.dbuf)
+<<<<<<< HEAD
+=======
+        t = [self.dbuf]
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         while c < size:
             buf = self.__read(self.bufsize)
             if not buf:
@@ -554,26 +571,46 @@ class _Stream:
                 buf = self.cmp.decompress(buf)
             except self.exception:
                 raise ReadError("invalid compressed data")
+<<<<<<< HEAD
             self.dbuf += buf
             c += len(buf)
         buf = self.dbuf[:size]
         self.dbuf = self.dbuf[size:]
         return buf
+=======
+            t.append(buf)
+            c += len(buf)
+        t = b"".join(t)
+        self.dbuf = t[size:]
+        return t[:size]
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     def __read(self, size):
         """Return size bytes from stream. If internal buffer is empty,
            read another block from the stream.
         """
         c = len(self.buf)
+<<<<<<< HEAD
+=======
+        t = [self.buf]
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         while c < size:
             buf = self.fileobj.read(self.bufsize)
             if not buf:
                 break
+<<<<<<< HEAD
             self.buf += buf
             c += len(buf)
         buf = self.buf[:size]
         self.buf = self.buf[size:]
         return buf
+=======
+            t.append(buf)
+            c += len(buf)
+        t = b"".join(t)
+        self.buf = t[size:]
+        return t[:size]
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 # class _Stream
 
 class _StreamProxy(object):
@@ -761,6 +798,7 @@ class TarInfo(object):
 
     # In pax headers the "name" and "linkname" field are called
     # "path" and "linkpath".
+<<<<<<< HEAD
     def _getpath(self):
         return self.name
     def _setpath(self, name):
@@ -772,6 +810,23 @@ class TarInfo(object):
     def _setlinkpath(self, linkname):
         self.linkname = linkname
     linkpath = property(_getlinkpath, _setlinkpath)
+=======
+    @property
+    def path(self):
+        return self.name
+
+    @path.setter
+    def path(self, name):
+        self.name = name
+
+    @property
+    def linkpath(self):
+        return self.linkname
+
+    @linkpath.setter
+    def linkpath(self, linkname):
+        self.linkname = linkname
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     def __repr__(self):
         return "<%s %r at %#x>" % (self.__class__.__name__,self.name,id(self))
@@ -1056,7 +1111,11 @@ class TarInfo(object):
 
         # The old GNU sparse format occupies some of the unused
         # space in the buffer for up to 4 sparse structures.
+<<<<<<< HEAD
         # Save the them for later processing in _proc_sparse().
+=======
+        # Save them for later processing in _proc_sparse().
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         if obj.type == GNUTYPE_SPARSE:
             pos = 386
             structs = []
@@ -1897,13 +1956,21 @@ class TarFile(object):
                     _safe_print("link to " + tarinfo.linkname)
             print()
 
+<<<<<<< HEAD
     def add(self, name, arcname=None, recursive=True, exclude=None, *, filter=None):
+=======
+    def add(self, name, arcname=None, recursive=True, *, filter=None):
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         """Add the file `name' to the archive. `name' may be any type of file
            (directory, fifo, symbolic link, etc.). If given, `arcname'
            specifies an alternative name for the file in the archive.
            Directories are added recursively by default. This can be avoided by
+<<<<<<< HEAD
            setting `recursive' to False. `exclude' is a function that should
            return True for each filename to be excluded. `filter' is a function
+=======
+           setting `recursive' to False. `filter' is a function
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
            that expects a TarInfo object argument and returns the changed
            TarInfo object, if it returns None the TarInfo object will be
            excluded from the archive.
@@ -1913,6 +1980,7 @@ class TarFile(object):
         if arcname is None:
             arcname = name
 
+<<<<<<< HEAD
         # Exclude pathnames.
         if exclude is not None:
             import warnings
@@ -1922,6 +1990,8 @@ class TarFile(object):
                 self._dbg(2, "tarfile: Excluded %r" % name)
                 return
 
+=======
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         # Skip if somebody tries to archive the archive...
         if self.name is not None and os.path.abspath(name) == self.name:
             self._dbg(2, "tarfile: Skipped %r" % name)
@@ -1951,9 +2021,15 @@ class TarFile(object):
         elif tarinfo.isdir():
             self.addfile(tarinfo)
             if recursive:
+<<<<<<< HEAD
                 for f in os.listdir(name):
                     self.add(os.path.join(name, f), os.path.join(arcname, f),
                             recursive, exclude, filter=filter)
+=======
+                for f in sorted(os.listdir(name)):
+                    self.add(os.path.join(name, f), os.path.join(arcname, f),
+                            recursive, filter=filter)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
         else:
             self.addfile(tarinfo)
@@ -2456,11 +2532,19 @@ open = TarFile.open
 def main():
     import argparse
 
+<<<<<<< HEAD
     description = 'A simple command line interface for tarfile module.'
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-v', '--verbose', action='store_true', default=False,
                         help='Verbose output')
     group = parser.add_mutually_exclusive_group()
+=======
+    description = 'A simple command-line interface for tarfile module.'
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument('-v', '--verbose', action='store_true', default=False,
+                        help='Verbose output')
+    group = parser.add_mutually_exclusive_group(required=True)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     group.add_argument('-l', '--list', metavar='<tarfile>',
                        help='Show listing of a tarfile')
     group.add_argument('-e', '--extract', nargs='+',
@@ -2473,7 +2557,11 @@ def main():
                        help='Test if a tarfile is valid')
     args = parser.parse_args()
 
+<<<<<<< HEAD
     if args.test:
+=======
+    if args.test is not None:
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         src = args.test
         if is_tarfile(src):
             with open(src, 'r') as tar:
@@ -2484,7 +2572,11 @@ def main():
         else:
             parser.exit(1, '{!r} is not a tar archive.\n'.format(src))
 
+<<<<<<< HEAD
     elif args.list:
+=======
+    elif args.list is not None:
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         src = args.list
         if is_tarfile(src):
             with TarFile.open(src, 'r:*') as tf:
@@ -2492,7 +2584,11 @@ def main():
         else:
             parser.exit(1, '{!r} is not a tar archive.\n'.format(src))
 
+<<<<<<< HEAD
     elif args.extract:
+=======
+    elif args.extract is not None:
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         if len(args.extract) == 1:
             src = args.extract[0]
             curdir = os.curdir
@@ -2514,7 +2610,11 @@ def main():
         else:
             parser.exit(1, '{!r} is not a tar archive.\n'.format(src))
 
+<<<<<<< HEAD
     elif args.create:
+=======
+    elif args.create is not None:
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         tar_name = args.create.pop(0)
         _, ext = os.path.splitext(tar_name)
         compressions = {
@@ -2540,8 +2640,11 @@ def main():
         if args.verbose:
             print('{!r} file created.'.format(tar_name))
 
+<<<<<<< HEAD
     else:
         parser.exit(1, parser.format_help())
 
+=======
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 if __name__ == '__main__':
     main()

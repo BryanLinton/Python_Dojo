@@ -234,7 +234,12 @@ proc ::tk::MessageBox {args} {
     }
     if {!$valid} {
 	return -code error -errorcode {TK MSGBOX DEFAULT} \
+<<<<<<< HEAD
 	    "invalid default button \"$data(-default)\""
+=======
+	    "bad -default value \"$data(-default)\": must be\
+	    abort, retry, ignore, ok, cancel, no, or yes"
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     }
 
     # 2. Set the dialog to be a child window of $parent

@@ -18,7 +18,11 @@
 #error "Python's source code assumes C's unsigned char is an 8-bit type."
 #endif
 
+<<<<<<< HEAD
 #if defined(__sgi) && defined(WITH_THREAD) && !defined(_SGI_MP_SOURCE)
+=======
+#if defined(__sgi) && !defined(_SGI_MP_SOURCE)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 #define _SGI_MP_SOURCE
 #endif
 
@@ -35,6 +39,22 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+<<<<<<< HEAD
+=======
+#ifdef HAVE_CRYPT_H
+#if defined(HAVE_CRYPT_R) && !defined(_GNU_SOURCE)
+/* Required for glibc to expose the crypt_r() function prototype. */
+#  define _GNU_SOURCE
+#  define _Py_GNU_SOURCE_FOR_CRYPT
+#endif
+#include <crypt.h>
+#ifdef _Py_GNU_SOURCE_FOR_CRYPT
+/* Don't leak the _GNU_SOURCE define to other headers. */
+#  undef _GNU_SOURCE
+#  undef _Py_GNU_SOURCE_FOR_CRYPT
+#endif
+#endif
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 /* For size_t? */
 #ifdef HAVE_STDDEF_H
@@ -50,6 +70,18 @@
 #include "pyport.h"
 #include "pymacro.h"
 
+<<<<<<< HEAD
+=======
+/* A convenient way for code to know if clang's memory sanitizer is enabled. */
+#if defined(__has_feature)
+#  if __has_feature(memory_sanitizer)
+#    if !defined(_Py_MEMORY_SANITIZER)
+#      define _Py_MEMORY_SANITIZER
+#    endif
+#  endif
+#endif
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 #include "pyatomic.h"
 
 /* Debug-mode build with pymalloc implies PYMALLOC_DEBUG.
@@ -109,9 +141,17 @@
 #include "pyerrors.h"
 
 #include "pystate.h"
+<<<<<<< HEAD
 
 #include "pyarena.h"
 #include "modsupport.h"
+=======
+#include "context.h"
+
+#include "pyarena.h"
+#include "modsupport.h"
+#include "compile.h"
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 #include "pythonrun.h"
 #include "pylifecycle.h"
 #include "ceval.h"
@@ -123,7 +163,10 @@
 #include "abstract.h"
 #include "bltinmodule.h"
 
+<<<<<<< HEAD
 #include "compile.h"
+=======
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 #include "eval.h"
 
 #include "pyctype.h"

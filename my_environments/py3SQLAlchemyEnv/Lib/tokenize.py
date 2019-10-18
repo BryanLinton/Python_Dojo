@@ -38,6 +38,7 @@ cookie_re = re.compile(r'^[ \t\f]*#.*?coding[:=][ \t]*([-\w.]+)', re.ASCII)
 blank_re = re.compile(br'^[ \t\f]*(?:[#\r\n]|$)', re.ASCII)
 
 import token
+<<<<<<< HEAD
 __all__ = token.__all__ + ["COMMENT", "tokenize", "detect_encoding",
                            "NL", "untokenize", "ENCODING", "TokenInfo"]
 del token
@@ -49,6 +50,12 @@ tok_name[NL] = 'NL'
 ENCODING = N_TOKENS + 2
 tok_name[ENCODING] = 'ENCODING'
 N_TOKENS += 3
+=======
+__all__ = token.__all__ + ["tokenize", "detect_encoding",
+                           "untokenize", "TokenInfo"]
+del token
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 EXACT_TOKEN_TYPES = {
     '(':   LPAR,
     ')':   RPAR,
@@ -86,12 +93,21 @@ EXACT_TOKEN_TYPES = {
     '%=':  PERCENTEQUAL,
     '&=':  AMPEREQUAL,
     '|=':  VBAREQUAL,
+<<<<<<< HEAD
     '^=': CIRCUMFLEXEQUAL,
+=======
+    '^=':  CIRCUMFLEXEQUAL,
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     '<<=': LEFTSHIFTEQUAL,
     '>>=': RIGHTSHIFTEQUAL,
     '**=': DOUBLESTAREQUAL,
     '//':  DOUBLESLASH,
     '//=': DOUBLESLASHEQUAL,
+<<<<<<< HEAD
+=======
+    '...': ELLIPSIS,
+    '->':  RARROW,
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     '@':   AT,
     '@=':  ATEQUAL,
 }
@@ -136,11 +152,19 @@ Number = group(Imagnumber, Floatnumber, Intnumber)
 # Return the empty string, plus all of the valid string prefixes.
 def _all_string_prefixes():
     # The valid string prefixes. Only contain the lower case versions,
+<<<<<<< HEAD
     #  and don't contain any permuations (include 'fr', but not
     #  'rf'). The various permutations will be generated.
     _valid_string_prefixes = ['b', 'r', 'u', 'f', 'br', 'fr']
     # if we add binary f-strings, add: ['fb', 'fbr']
     result = set([''])
+=======
+    #  and don't contain any permutations (include 'fr', but not
+    #  'rf'). The various permutations will be generated.
+    _valid_string_prefixes = ['b', 'r', 'u', 'f', 'br', 'fr']
+    # if we add binary f-strings, add: ['fb', 'fbr']
+    result = {''}
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     for prefix in _valid_string_prefixes:
         for t in _itertools.permutations(prefix):
             # create a list with upper and lower versions of each
@@ -289,7 +313,11 @@ class Untokenizer:
                 self.encoding = tokval
                 continue
 
+<<<<<<< HEAD
             if toknum in (NAME, NUMBER, ASYNC, AWAIT):
+=======
+            if toknum in (NAME, NUMBER):
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
                 tokval += ' '
 
             # Insert a space between two consecutive strings
@@ -496,19 +524,34 @@ def _tokenize(readline, encoding):
     contline = None
     indents = [0]
 
+<<<<<<< HEAD
     # 'stashed' and 'async_*' are used for async/await parsing
     stashed = None
     async_def = False
     async_def_indent = 0
     async_def_nl = False
 
+=======
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     if encoding is not None:
         if encoding == "utf-8-sig":
             # BOM will already have been stripped.
             encoding = "utf-8"
         yield TokenInfo(ENCODING, encoding, (0, 0), (0, 0), '')
+<<<<<<< HEAD
     while True:             # loop over lines in stream
         try:
+=======
+    last_line = b''
+    line = b''
+    while True:                                # loop over lines in stream
+        try:
+            # We capture the value of the line variable here because
+            # readline uses the empty string '' to signal end of input,
+            # hence `line` itself will always be overwritten at the end
+            # of this loop.
+            last_line = line
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
             line = readline()
         except StopIteration:
             line = b''
@@ -558,6 +601,7 @@ def _tokenize(readline, encoding):
             if line[pos] in '#\r\n':           # skip comments or blank lines
                 if line[pos] == '#':
                     comment_token = line[pos:].rstrip('\r\n')
+<<<<<<< HEAD
                     nl_pos = pos + len(comment_token)
                     yield TokenInfo(COMMENT, comment_token,
                            (lnum, pos), (lnum, pos + len(comment_token)), line)
@@ -565,6 +609,13 @@ def _tokenize(readline, encoding):
                            (lnum, nl_pos), (lnum, len(line)), line)
                 else:
                     yield TokenInfo((NL, COMMENT)[line[pos] == '#'], line[pos:],
+=======
+                    yield TokenInfo(COMMENT, comment_token,
+                           (lnum, pos), (lnum, pos + len(comment_token)), line)
+                    pos += len(comment_token)
+
+                yield TokenInfo(NL, line[pos:],
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
                            (lnum, pos), (lnum, len(line)), line)
                 continue
 
@@ -578,6 +629,7 @@ def _tokenize(readline, encoding):
                         ("<tokenize>", lnum, pos, line))
                 indents = indents[:-1]
 
+<<<<<<< HEAD
                 if async_def and async_def_indent >= indents[-1]:
                     async_def = False
                     async_def_nl = False
@@ -590,6 +642,10 @@ def _tokenize(readline, encoding):
                 async_def_nl = False
                 async_def_indent = 0
 
+=======
+                yield TokenInfo(DEDENT, '', (lnum, pos), (lnum, pos), line)
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         else:                                  # continued statement
             if not line:
                 raise TokenError("EOF in multi-line statement", (lnum, 0))
@@ -608,13 +664,17 @@ def _tokenize(readline, encoding):
                     (initial == '.' and token != '.' and token != '...')):
                     yield TokenInfo(NUMBER, token, spos, epos, line)
                 elif initial in '\r\n':
+<<<<<<< HEAD
                     if stashed:
                         yield stashed
                         stashed = None
+=======
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
                     if parenlev > 0:
                         yield TokenInfo(NL, token, spos, epos, line)
                     else:
                         yield TokenInfo(NEWLINE, token, spos, epos, line)
+<<<<<<< HEAD
                         if async_def:
                             async_def_nl = True
 
@@ -623,6 +683,11 @@ def _tokenize(readline, encoding):
                     if stashed:
                         yield stashed
                         stashed = None
+=======
+
+                elif initial == '#':
+                    assert not token.endswith("\n")
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
                     yield TokenInfo(COMMENT, token, spos, epos, line)
 
                 elif token in triple_quoted:
@@ -669,6 +734,7 @@ def _tokenize(readline, encoding):
                         yield TokenInfo(STRING, token, spos, epos, line)
 
                 elif initial.isidentifier():               # ordinary name
+<<<<<<< HEAD
                     if token in ('async', 'await'):
                         if async_def:
                             yield TokenInfo(
@@ -699,6 +765,9 @@ def _tokenize(readline, encoding):
                         stashed = None
 
                     yield tok
+=======
+                    yield TokenInfo(NAME, token, spos, epos, line)
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
                 elif initial == '\\':                      # continued stmt
                     continued = 1
                 else:
@@ -706,19 +775,28 @@ def _tokenize(readline, encoding):
                         parenlev += 1
                     elif initial in ')]}':
                         parenlev -= 1
+<<<<<<< HEAD
                     if stashed:
                         yield stashed
                         stashed = None
+=======
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
                     yield TokenInfo(OP, token, spos, epos, line)
             else:
                 yield TokenInfo(ERRORTOKEN, line[pos],
                            (lnum, pos), (lnum, pos+1), line)
                 pos += 1
 
+<<<<<<< HEAD
     if stashed:
         yield stashed
         stashed = None
 
+=======
+    # Add an implicit NEWLINE if the input doesn't end in one
+    if last_line and last_line[-1] not in '\r\n':
+        yield TokenInfo(NEWLINE, '', (lnum - 1, len(last_line)), (lnum - 1, len(last_line) + 1), '')
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     for indent in indents[1:]:                 # pop remaining indent levels
         yield TokenInfo(DEDENT, '', (lnum, 0), (lnum, 0), '')
     yield TokenInfo(ENDMARKER, '', (lnum, 0), (lnum, 0), '')

@@ -501,6 +501,10 @@ PyAPI_FUNC(PyObject *) PyType_GenericAlloc(PyTypeObject *, Py_ssize_t);
 PyAPI_FUNC(PyObject *) PyType_GenericNew(PyTypeObject *,
                                                PyObject *, PyObject *);
 #ifndef Py_LIMITED_API
+<<<<<<< HEAD
+=======
+PyAPI_FUNC(const char *) _PyType_Name(PyTypeObject *);
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 PyAPI_FUNC(PyObject *) _PyType_Lookup(PyTypeObject *, PyObject *);
 PyAPI_FUNC(PyObject *) _PyType_LookupId(PyTypeObject *, _Py_Identifier *);
 PyAPI_FUNC(PyObject *) _PyObject_LookupSpecial(PyObject *, _Py_Identifier *);
@@ -520,6 +524,10 @@ struct _Py_Identifier;
 PyAPI_FUNC(int) PyObject_Print(PyObject *, FILE *, int);
 PyAPI_FUNC(void) _Py_BreakPoint(void);
 PyAPI_FUNC(void) _PyObject_Dump(PyObject *);
+<<<<<<< HEAD
+=======
+PyAPI_FUNC(int) _PyObject_IsFreed(PyObject *);
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 #endif
 PyAPI_FUNC(PyObject *) PyObject_Repr(PyObject *);
 PyAPI_FUNC(PyObject *) PyObject_Str(PyObject *);
@@ -538,6 +546,20 @@ PyAPI_FUNC(int) _PyObject_IsAbstract(PyObject *);
 PyAPI_FUNC(PyObject *) _PyObject_GetAttrId(PyObject *, struct _Py_Identifier *);
 PyAPI_FUNC(int) _PyObject_SetAttrId(PyObject *, struct _Py_Identifier *, PyObject *);
 PyAPI_FUNC(int) _PyObject_HasAttrId(PyObject *, struct _Py_Identifier *);
+<<<<<<< HEAD
+=======
+/* Replacements of PyObject_GetAttr() and _PyObject_GetAttrId() which
+   don't raise AttributeError.
+
+   Return 1 and set *result != NULL if an attribute is found.
+   Return 0 and set *result == NULL if an attribute is not found;
+   an AttributeError is silenced.
+   Return -1 and set *result == NULL if an error other than AttributeError
+   is raised.
+*/
+PyAPI_FUNC(int) _PyObject_LookupAttr(PyObject *, PyObject *, PyObject **);
+PyAPI_FUNC(int) _PyObject_LookupAttrId(PyObject *, struct _Py_Identifier *, PyObject **);
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 PyAPI_FUNC(PyObject **) _PyObject_GetDictPtr(PyObject *);
 #endif
 PyAPI_FUNC(PyObject *) PyObject_SelfIter(PyObject *);
@@ -566,7 +588,11 @@ PyAPI_FUNC(int) PyObject_CallFinalizerFromDealloc(PyObject *);
 /* Same as PyObject_Generic{Get,Set}Attr, but passing the attributes
    dict as the last parameter. */
 PyAPI_FUNC(PyObject *)
+<<<<<<< HEAD
 _PyObject_GenericGetAttrWithDict(PyObject *, PyObject *, PyObject *);
+=======
+_PyObject_GenericGetAttrWithDict(PyObject *, PyObject *, PyObject *, int);
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 PyAPI_FUNC(int)
 _PyObject_GenericSetAttrWithDict(PyObject *, PyObject *,
                                  PyObject *, PyObject *);
@@ -603,7 +629,11 @@ introducing new functionality between major revisions (to avoid mid-version
 changes in the PYTHON_API_VERSION).
 
 Arbitration of the flag bit positions will need to be coordinated among
+<<<<<<< HEAD
 all extension writers who publically release their extensions (this will
+=======
+all extension writers who publicly release their extensions (this will
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 be fewer than you might expect!)..
 
 Most flags were removed as of Python 3.0 to make room for new flags.  (Some
@@ -728,13 +758,19 @@ PyAPI_FUNC(Py_ssize_t) _Py_GetRefTotal(void);
  * allocations at the interactive prompt and at interpreter shutdown
  */
 PyAPI_FUNC(void) _PyDebug_PrintTotalRefs(void);
+<<<<<<< HEAD
 #define _PY_DEBUG_PRINT_TOTAL_REFS() _PyDebug_PrintTotalRefs()
+=======
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 #else
 #define _Py_INC_REFTOTAL
 #define _Py_DEC_REFTOTAL
 #define _Py_REF_DEBUG_COMMA
 #define _Py_CHECK_REFCNT(OP)    /* a semicolon */;
+<<<<<<< HEAD
 #define _PY_DEBUG_PRINT_TOTAL_REFS()
+=======
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 #endif /* Py_REF_DEBUG */
 
 #ifdef COUNT_ALLOCS
@@ -931,6 +967,28 @@ PyAPI_DATA(PyObject) _Py_NotImplementedStruct; /* Don't use this directly */
 #define Py_GT 4
 #define Py_GE 5
 
+<<<<<<< HEAD
+=======
+/*
+ * Macro for implementing rich comparisons
+ *
+ * Needs to be a macro because any C-comparable type can be used.
+ */
+#define Py_RETURN_RICHCOMPARE(val1, val2, op)                               \
+    do {                                                                    \
+        switch (op) {                                                       \
+        case Py_EQ: if ((val1) == (val2)) Py_RETURN_TRUE; Py_RETURN_FALSE;  \
+        case Py_NE: if ((val1) != (val2)) Py_RETURN_TRUE; Py_RETURN_FALSE;  \
+        case Py_LT: if ((val1) < (val2)) Py_RETURN_TRUE; Py_RETURN_FALSE;   \
+        case Py_GT: if ((val1) > (val2)) Py_RETURN_TRUE; Py_RETURN_FALSE;   \
+        case Py_LE: if ((val1) <= (val2)) Py_RETURN_TRUE; Py_RETURN_FALSE;  \
+        case Py_GE: if ((val1) >= (val2)) Py_RETURN_TRUE; Py_RETURN_FALSE;  \
+        default:                                                            \
+            Py_UNREACHABLE();                                               \
+        }                                                                   \
+    } while (0)
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 #ifndef Py_LIMITED_API
 /* Maps Py_LT to Py_GT, ..., Py_GE to Py_LE.
  * Defined in object.c.
@@ -1029,7 +1087,11 @@ without deallocating anything (and so unbounded call-stack depth is avoided).
 When the call stack finishes unwinding again, code generated by the END macro
 notices this, and calls another routine to deallocate all the objects that
 may have been added to the list of deferred deallocations.  In effect, a
+<<<<<<< HEAD
 chain of N deallocations is broken into N / PyTrash_UNWIND_LEVEL pieces,
+=======
+chain of N deallocations is broken into (N-1)/(PyTrash_UNWIND_LEVEL-1) pieces,
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 with the call stack never exceeding a depth of PyTrash_UNWIND_LEVEL.
 */
 
@@ -1038,8 +1100,11 @@ with the call stack never exceeding a depth of PyTrash_UNWIND_LEVEL.
    Kept for binary compatibility of extensions using the stable ABI. */
 PyAPI_FUNC(void) _PyTrash_deposit_object(PyObject*);
 PyAPI_FUNC(void) _PyTrash_destroy_chain(void);
+<<<<<<< HEAD
 PyAPI_DATA(int) _PyTrash_delete_nesting;
 PyAPI_DATA(PyObject *) _PyTrash_delete_later;
+=======
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 #endif /* !Py_LIMITED_API */
 
 /* The new thread-safe private API, invoked by the macros below. */

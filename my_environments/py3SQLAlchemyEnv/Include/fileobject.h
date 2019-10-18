@@ -28,6 +28,13 @@ PyAPI_DATA(const char *) Py_FileSystemDefaultEncodeErrors;
 #endif
 PyAPI_DATA(int) Py_HasFileSystemDefaultEncoding;
 
+<<<<<<< HEAD
+=======
+#if !defined(Py_LIMITED_API) || Py_LIMITED_API+0 >= 0x03070000
+PyAPI_DATA(int) Py_UTF8Mode;
+#endif
+
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 /* Internal API
 
    The std printer acts as a preliminary sys.stderr until the new io
@@ -38,11 +45,20 @@ PyAPI_DATA(PyTypeObject) PyStdPrinter_Type;
 #endif /* Py_LIMITED_API */
 
 /* A routine to check if a file descriptor can be select()-ed. */
+<<<<<<< HEAD
 #ifdef HAVE_SELECT
  #define _PyIsSelectable_fd(FD) ((unsigned int)(FD) < (unsigned int)FD_SETSIZE)
 #else
  #define _PyIsSelectable_fd(FD) (1)
 #endif /* HAVE_SELECT */
+=======
+#ifdef _MSC_VER
+    /* On Windows, any socket fd can be select()-ed, no matter how high */
+    #define _PyIsSelectable_fd(FD) (1)
+#else
+    #define _PyIsSelectable_fd(FD) ((unsigned int)(FD) < (unsigned int)FD_SETSIZE)
+#endif
+>>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 #ifdef __cplusplus
 }
