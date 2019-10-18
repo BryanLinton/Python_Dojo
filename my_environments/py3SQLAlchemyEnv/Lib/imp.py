@@ -142,7 +142,6 @@ class _HackedGetData:
     def get_data(self, path):
         """Gross hack to contort loader to deal w/ load_*()'s bad API."""
         if self.file and path == self.path:
-<<<<<<< HEAD
             if not self.file.closed:
                 file = self.file
             else:
@@ -154,18 +153,6 @@ class _HackedGetData:
                 # compile() which can handle str. And converting to bytes would
                 # require figuring out the encoding to decode to and
                 # tokenize.detect_encoding() only accepts bytes.
-=======
-            # The contract of get_data() requires us to return bytes. Reopen the
-            # file in binary mode if needed.
-            if not self.file.closed:
-                file = self.file
-                if 'b' not in file.mode:
-                    file.close()
-            if self.file.closed:
-                self.file = file = open(self.path, 'rb')
-
-            with file:
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
                 return file.read()
         else:
             return super().get_data(path)

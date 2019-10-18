@@ -30,22 +30,13 @@ PyAPI_FUNC(PyObject *) PyMethod_Self(PyObject *);
 #define PyMethod_GET_FUNCTION(meth) \
         (((PyMethodObject *)meth) -> im_func)
 #define PyMethod_GET_SELF(meth) \
-<<<<<<< HEAD
 	(((PyMethodObject *)meth) -> im_self)
-=======
-        (((PyMethodObject *)meth) -> im_self)
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 PyAPI_FUNC(int) PyMethod_ClearFreeList(void);
 
 typedef struct {
-<<<<<<< HEAD
 	PyObject_HEAD
 	PyObject *func;
-=======
-    PyObject_HEAD
-    PyObject *func;
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 } PyInstanceMethodObject;
 
 PyAPI_DATA(PyTypeObject) PyInstanceMethod_Type;

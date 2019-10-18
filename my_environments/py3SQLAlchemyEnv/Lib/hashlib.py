@@ -25,7 +25,6 @@ Choose your hash function wisely.  Some have known collision weaknesses.
 sha384 and sha512 will be slow on 32 bit platforms.
 
 Hash objects have these methods:
-<<<<<<< HEAD
  - update(arg): Update the hash object with the bytes in arg. Repeated calls
                 are equivalent to a single call with the concatenation of all
                 the arguments.
@@ -38,20 +37,6 @@ Hash objects have these methods:
                 initial substring.
 
 For example, to obtain the digest of the string 'Nobody inspects the
-=======
- - update(data): Update the hash object with the bytes in data. Repeated calls
-                 are equivalent to a single call with the concatenation of all
-                 the arguments.
- - digest():     Return the digest of the bytes passed to the update() method
-                 so far as a bytes object.
- - hexdigest():  Like digest() except the digest is returned as a string
-                 of double length, containing only hexadecimal digits.
- - copy():       Return a copy (clone) of the hash object. This can be used to
-                 efficiently compute the digests of datas that share a common
-                 initial substring.
-
-For example, to obtain the digest of the byte string 'Nobody inspects the
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 spammish repetition':
 
     >>> import hashlib
@@ -145,23 +130,14 @@ def __get_openssl_constructor(name):
 
 def __py_new(name, data=b'', **kwargs):
     """new(name, data=b'', **kwargs) - Return a new hashing object using the
-<<<<<<< HEAD
     named algorithm; optionally initialized with data (which must be bytes).
-=======
-    named algorithm; optionally initialized with data (which must be
-    a bytes-like object).
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     """
     return __get_builtin_constructor(name)(data, **kwargs)
 
 
 def __hash_new(name, data=b'', **kwargs):
     """new(name, data=b'') - Return a new hashing object using the named algorithm;
-<<<<<<< HEAD
     optionally initialized with data (which must be bytes).
-=======
-    optionally initialized with data (which must be a bytes-like object).
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     """
     if name in {'blake2b', 'blake2s'}:
         # Prefer our blake2 implementation.
@@ -242,11 +218,7 @@ except ImportError:
         from_bytes = int.from_bytes
         while len(dkey) < dklen:
             prev = prf(salt + loop.to_bytes(4, 'big'))
-<<<<<<< HEAD
             # endianess doesn't matter here as long to / from use the same
-=======
-            # endianness doesn't matter here as long to / from use the same
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
             rkey = int.from_bytes(prev, 'big')
             for i in range(iterations - 1):
                 prev = prf(prev)

@@ -19,11 +19,8 @@ def insort_right(a, x, lo=0, hi=None):
         else: lo = mid+1
     a.insert(lo, x)
 
-<<<<<<< HEAD
 insort = insort_right   # backward compatibility
 
-=======
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 def bisect_right(a, x, lo=0, hi=None):
     """Return the index where to insert item x in list a, assuming a is sorted.
 
@@ -45,11 +42,8 @@ def bisect_right(a, x, lo=0, hi=None):
         else: lo = mid+1
     return lo
 
-<<<<<<< HEAD
 bisect = bisect_right   # backward compatibility
 
-=======
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 def insort_left(a, x, lo=0, hi=None):
     """Insert item x in list a, and keep it sorted assuming a is sorted.
 
@@ -96,10 +90,3 @@ try:
     from _bisect import *
 except ImportError:
     pass
-<<<<<<< HEAD
-=======
-
-# Create aliases
-bisect = bisect_right
-insort = insort_right
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98

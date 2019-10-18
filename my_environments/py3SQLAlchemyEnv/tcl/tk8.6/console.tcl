@@ -286,10 +286,6 @@ proc ::tk::ConsoleHistory {cmd} {
     	    }
 	    .console delete promptEnd end
     	    .console insert promptEnd $cmd {input stdin}
-<<<<<<< HEAD
-=======
-	    .console see end
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     	}
     	next {
 	    incr HistNum
@@ -306,10 +302,6 @@ proc ::tk::ConsoleHistory {cmd} {
 	    }
 	    .console delete promptEnd end
 	    .console insert promptEnd $cmd {input stdin}
-<<<<<<< HEAD
-=======
-	    .console see end
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     	}
     	reset {
     	    set HistNum 1

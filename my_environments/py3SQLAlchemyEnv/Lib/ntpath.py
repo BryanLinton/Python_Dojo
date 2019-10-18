@@ -5,8 +5,6 @@ Instead of importing this module directly, import os and refer to this
 module as os.path.
 """
 
-<<<<<<< HEAD
-=======
 # strings representing various path-related bits and pieces
 # These are primarily for export; internally, they are hardcoded.
 # Should be set before imports for resolving cyclic dependency.
@@ -19,7 +17,6 @@ altsep = '/'
 defpath = '.;C:\\bin'
 devnull = 'nul'
 
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 import os
 import sys
 import stat
@@ -30,28 +27,10 @@ __all__ = ["normcase","isabs","join","splitdrive","split","splitext",
            "basename","dirname","commonprefix","getsize","getmtime",
            "getatime","getctime", "islink","exists","lexists","isdir","isfile",
            "ismount", "expanduser","expandvars","normpath","abspath",
-<<<<<<< HEAD
            "splitunc","curdir","pardir","sep","pathsep","defpath","altsep",
            "extsep","devnull","realpath","supports_unicode_filenames","relpath",
            "samefile", "sameopenfile", "samestat", "commonpath"]
 
-# strings representing various path-related bits and pieces
-# These are primarily for export; internally, they are hardcoded.
-curdir = '.'
-pardir = '..'
-extsep = '.'
-sep = '\\'
-pathsep = ';'
-altsep = '/'
-defpath = '.;C:\\bin'
-devnull = 'nul'
-
-=======
-           "curdir","pardir","sep","pathsep","defpath","altsep",
-           "extsep","devnull","realpath","supports_unicode_filenames","relpath",
-           "samefile", "sameopenfile", "samestat", "commonpath"]
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 def _get_bothseps(path):
     if isinstance(path, bytes):
         return b'\\/'
@@ -191,7 +170,6 @@ def splitdrive(p):
     return p[:0], p
 
 
-<<<<<<< HEAD
 # Parse UNC paths
 def splitunc(p):
     """Deprecated since Python 3.1.  Please use splitdrive() instead;
@@ -214,8 +192,6 @@ def splitunc(p):
     return drive, path
 
 
-=======
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 # Split a path in head (everything up to the last '/') and tail (the
 # rest).  After the trailing '/' is stripped, the invariant
 # join(head, tail) == p holds.
@@ -542,31 +518,12 @@ def normpath(path):
         comps.append(curdir)
     return prefix + sep.join(comps)
 
-<<<<<<< HEAD
-=======
-def _abspath_fallback(path):
-    """Return the absolute version of a path as a fallback function in case
-    `nt._getfullpathname` is not available or raises OSError. See bpo-31047 for
-    more.
-
-    """
-
-    path = os.fspath(path)
-    if not isabs(path):
-        if isinstance(path, bytes):
-            cwd = os.getcwdb()
-        else:
-            cwd = os.getcwd()
-        path = join(cwd, path)
-    return normpath(path)
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 # Return an absolute path.
 try:
     from nt import _getfullpathname
 
 except ImportError: # not running on Windows - mock up something sensible
-<<<<<<< HEAD
     def abspath(path):
         """Return the absolute version of a path."""
         path = os.fspath(path)
@@ -577,14 +534,10 @@ except ImportError: # not running on Windows - mock up something sensible
                 cwd = os.getcwd()
             path = join(cwd, path)
         return normpath(path)
-=======
-    abspath = _abspath_fallback
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 else:  # use native Windows method on Windows
     def abspath(path):
         """Return the absolute version of a path."""
-<<<<<<< HEAD
 
         if path: # Empty path must return current working directory.
             path = os.fspath(path)
@@ -597,12 +550,6 @@ else:  # use native Windows method on Windows
         else:
             path = os.getcwd()
         return normpath(path)
-=======
-        try:
-            return normpath(_getfullpathname(path))
-        except (OSError, ValueError):
-            return _abspath_fallback(path)
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 # realpath is a no-op on systems without islink support
 realpath = abspath

@@ -498,17 +498,10 @@ def nsmallest(n, iterable, key=None):
         for elem in it:
             if elem < top:
                 _heapreplace(result, (elem, order))
-<<<<<<< HEAD
                 top = result[0][0]
                 order += 1
         result.sort()
         return [r[0] for r in result]
-=======
-                top, _order = result[0]
-                order += 1
-        result.sort()
-        return [elem for (elem, order) in result]
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     # General case, slowest method
     it = iter(iterable)
@@ -523,17 +516,10 @@ def nsmallest(n, iterable, key=None):
         k = key(elem)
         if k < top:
             _heapreplace(result, (k, order, elem))
-<<<<<<< HEAD
             top = result[0][0]
             order += 1
     result.sort()
     return [r[2] for r in result]
-=======
-            top, _order, _elem = result[0]
-            order += 1
-    result.sort()
-    return [elem for (k, order, elem) in result]
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 def nlargest(n, iterable, key=None):
     """Find the n largest elements in a dataset.
@@ -573,17 +559,10 @@ def nlargest(n, iterable, key=None):
         for elem in it:
             if top < elem:
                 _heapreplace(result, (elem, order))
-<<<<<<< HEAD
                 top = result[0][0]
                 order -= 1
         result.sort(reverse=True)
         return [r[0] for r in result]
-=======
-                top, _order = result[0]
-                order -= 1
-        result.sort(reverse=True)
-        return [elem for (elem, order) in result]
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     # General case, slowest method
     it = iter(iterable)
@@ -598,17 +577,10 @@ def nlargest(n, iterable, key=None):
         k = key(elem)
         if top < k:
             _heapreplace(result, (k, order, elem))
-<<<<<<< HEAD
             top = result[0][0]
             order -= 1
     result.sort(reverse=True)
     return [r[2] for r in result]
-=======
-            top, _order, _elem = result[0]
-            order -= 1
-    result.sort(reverse=True)
-    return [elem for (k, order, elem) in result]
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 # If available, use C implementation
 try:

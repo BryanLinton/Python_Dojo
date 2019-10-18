@@ -522,21 +522,6 @@ def _init_module_attrs(spec, module, *, override=False):
 
                 loader = _NamespaceLoader.__new__(_NamespaceLoader)
                 loader._path = spec.submodule_search_locations
-<<<<<<< HEAD
-=======
-                spec.loader = loader
-                # While the docs say that module.__file__ is not set for
-                # built-in modules, and the code below will avoid setting it if
-                # spec.has_location is false, this is incorrect for namespace
-                # packages.  Namespace packages have no location, but their
-                # __spec__.origin is None, and thus their module.__file__
-                # should also be None for consistency.  While a bit of a hack,
-                # this is the best place to ensure this consistency.
-                #
-                # See # https://docs.python.org/3/library/importlib.html#importlib.abc.Loader.load_module
-                # and bpo-32305
-                module.__file__ = None
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         try:
             module.__loader__ = loader
         except AttributeError:
@@ -1143,18 +1128,13 @@ def _setup(sys_module, _imp_module):
 
     # Directly load built-in modules needed during bootstrap.
     self_module = sys.modules[__name__]
-<<<<<<< HEAD
     for builtin_name in ('_warnings',):
-=======
-    for builtin_name in ('_thread', '_warnings', '_weakref'):
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         if builtin_name not in sys.modules:
             builtin_module = _builtin_from_name(builtin_name)
         else:
             builtin_module = sys.modules[builtin_name]
         setattr(self_module, builtin_name, builtin_module)
 
-<<<<<<< HEAD
     # Directly load the _thread module (needed during bootstrap).
     try:
         thread_module = _builtin_from_name('_thread')
@@ -1170,22 +1150,11 @@ def _setup(sys_module, _imp_module):
 
 def _install(sys_module, _imp_module):
     """Install importlib as the implementation of import."""
-=======
-
-def _install(sys_module, _imp_module):
-    """Install importers for builtin and frozen modules"""
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     _setup(sys_module, _imp_module)
 
     sys.meta_path.append(BuiltinImporter)
     sys.meta_path.append(FrozenImporter)
 
-<<<<<<< HEAD
-=======
-
-def _install_external_importers():
-    """Install importers that require external filesystem access"""
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     global _bootstrap_external
     import _frozen_importlib_external
     _bootstrap_external = _frozen_importlib_external

@@ -11,10 +11,6 @@ namespace eval ttk::theme::xpnative {
 	    -foreground SystemWindowText \
 	    -selectforeground SystemHighlightText \
 	    -selectbackground SystemHighlight \
-<<<<<<< HEAD
-=======
-	    -insertcolor SystemWindowText \
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 	    -font TkDefaultFont \
 	    ;
 
@@ -65,18 +61,5 @@ namespace eval ttk::theme::xpnative {
 
 	ttk::style configure Toolbutton -padding {4 4}
 
-<<<<<<< HEAD
-=======
-	# Treeview:
-	ttk::style configure Heading -font TkHeadingFont -relief raised
-	ttk::style configure Treeview -background SystemWindow
-	ttk::style map Treeview \
-	    -background [list   disabled SystemButtonFace \
-				{!disabled !selected} SystemWindow \
-				selected SystemHighlight] \
-	    -foreground [list   disabled SystemGrayText \
-				{!disabled !selected} SystemWindowText \
-				selected SystemHighlightText];
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     }
 }

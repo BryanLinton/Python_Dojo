@@ -47,7 +47,6 @@ struct _mod {
         struct {
             asdl_seq *body;
         } Module;
-<<<<<<< HEAD
         
         struct {
             asdl_seq *body;
@@ -61,21 +60,6 @@ struct _mod {
             asdl_seq *body;
         } Suite;
         
-=======
-
-        struct {
-            asdl_seq *body;
-        } Interactive;
-
-        struct {
-            expr_ty body;
-        } Expression;
-
-        struct {
-            asdl_seq *body;
-        } Suite;
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     } v;
 };
 
@@ -97,11 +81,7 @@ struct _stmt {
             asdl_seq *decorator_list;
             expr_ty returns;
         } FunctionDef;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             identifier name;
             arguments_ty args;
@@ -109,11 +89,7 @@ struct _stmt {
             asdl_seq *decorator_list;
             expr_ty returns;
         } AsyncFunctionDef;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             identifier name;
             asdl_seq *bases;
@@ -121,7 +97,6 @@ struct _stmt {
             asdl_seq *body;
             asdl_seq *decorator_list;
         } ClassDef;
-<<<<<<< HEAD
         
         struct {
             expr_ty value;
@@ -131,150 +106,86 @@ struct _stmt {
             asdl_seq *targets;
         } Delete;
         
-=======
-
-        struct {
-            expr_ty value;
-        } Return;
-
-        struct {
-            asdl_seq *targets;
-        } Delete;
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             asdl_seq *targets;
             expr_ty value;
         } Assign;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty target;
             operator_ty op;
             expr_ty value;
         } AugAssign;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty target;
             expr_ty annotation;
             expr_ty value;
             int simple;
         } AnnAssign;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty target;
             expr_ty iter;
             asdl_seq *body;
             asdl_seq *orelse;
         } For;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty target;
             expr_ty iter;
             asdl_seq *body;
             asdl_seq *orelse;
         } AsyncFor;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty test;
             asdl_seq *body;
             asdl_seq *orelse;
         } While;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty test;
             asdl_seq *body;
             asdl_seq *orelse;
         } If;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             asdl_seq *items;
             asdl_seq *body;
         } With;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             asdl_seq *items;
             asdl_seq *body;
         } AsyncWith;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty exc;
             expr_ty cause;
         } Raise;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             asdl_seq *body;
             asdl_seq *handlers;
             asdl_seq *orelse;
             asdl_seq *finalbody;
         } Try;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty test;
             expr_ty msg;
         } Assert;
-<<<<<<< HEAD
         
         struct {
             asdl_seq *names;
         } Import;
         
-=======
-
-        struct {
-            asdl_seq *names;
-        } Import;
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             identifier module;
             asdl_seq *names;
             int level;
         } ImportFrom;
-<<<<<<< HEAD
         
         struct {
             asdl_seq *names;
@@ -288,21 +199,6 @@ struct _stmt {
             expr_ty value;
         } Expr;
         
-=======
-
-        struct {
-            asdl_seq *names;
-        } Global;
-
-        struct {
-            asdl_seq *names;
-        } Nonlocal;
-
-        struct {
-            expr_ty value;
-        } Expr;
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     } v;
     int lineno;
     int col_offset;
@@ -324,99 +220,58 @@ struct _expr {
             boolop_ty op;
             asdl_seq *values;
         } BoolOp;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty left;
             operator_ty op;
             expr_ty right;
         } BinOp;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             unaryop_ty op;
             expr_ty operand;
         } UnaryOp;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             arguments_ty args;
             expr_ty body;
         } Lambda;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty test;
             expr_ty body;
             expr_ty orelse;
         } IfExp;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             asdl_seq *keys;
             asdl_seq *values;
         } Dict;
-<<<<<<< HEAD
         
         struct {
             asdl_seq *elts;
         } Set;
         
-=======
-
-        struct {
-            asdl_seq *elts;
-        } Set;
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty elt;
             asdl_seq *generators;
         } ListComp;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty elt;
             asdl_seq *generators;
         } SetComp;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty key;
             expr_ty value;
             asdl_seq *generators;
         } DictComp;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty elt;
             asdl_seq *generators;
         } GeneratorExp;
-<<<<<<< HEAD
         
         struct {
             expr_ty value;
@@ -430,37 +285,17 @@ struct _expr {
             expr_ty value;
         } YieldFrom;
         
-=======
-
-        struct {
-            expr_ty value;
-        } Await;
-
-        struct {
-            expr_ty value;
-        } Yield;
-
-        struct {
-            expr_ty value;
-        } YieldFrom;
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty left;
             asdl_int_seq *ops;
             asdl_seq *comparators;
         } Compare;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty func;
             asdl_seq *args;
             asdl_seq *keywords;
         } Call;
-<<<<<<< HEAD
         
         struct {
             object n;
@@ -470,23 +305,11 @@ struct _expr {
             string s;
         } Str;
         
-=======
-
-        struct {
-            object n;
-        } Num;
-
-        struct {
-            string s;
-        } Str;
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty value;
             int conversion;
             expr_ty format_spec;
         } FormattedValue;
-<<<<<<< HEAD
         
         struct {
             asdl_seq *values;
@@ -504,81 +327,38 @@ struct _expr {
             constant value;
         } Constant;
         
-=======
-
-        struct {
-            asdl_seq *values;
-        } JoinedStr;
-
-        struct {
-            bytes s;
-        } Bytes;
-
-        struct {
-            singleton value;
-        } NameConstant;
-
-        struct {
-            constant value;
-        } Constant;
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty value;
             identifier attr;
             expr_context_ty ctx;
         } Attribute;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty value;
             slice_ty slice;
             expr_context_ty ctx;
         } Subscript;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             expr_ty value;
             expr_context_ty ctx;
         } Starred;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             identifier id;
             expr_context_ty ctx;
         } Name;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             asdl_seq *elts;
             expr_context_ty ctx;
         } List;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         struct {
             asdl_seq *elts;
             expr_context_ty ctx;
         } Tuple;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     } v;
     int lineno;
     int col_offset;
@@ -593,7 +373,6 @@ struct _slice {
             expr_ty upper;
             expr_ty step;
         } Slice;
-<<<<<<< HEAD
         
         struct {
             asdl_seq *dims;
@@ -603,17 +382,6 @@ struct _slice {
             expr_ty value;
         } Index;
         
-=======
-
-        struct {
-            asdl_seq *dims;
-        } ExtSlice;
-
-        struct {
-            expr_ty value;
-        } Index;
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     } v;
 };
 
@@ -633,11 +401,7 @@ struct _excepthandler {
             identifier name;
             asdl_seq *body;
         } ExceptHandler;
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     } v;
     int lineno;
     int col_offset;

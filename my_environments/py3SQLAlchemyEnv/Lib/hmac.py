@@ -5,16 +5,6 @@ Implements the HMAC algorithm as described by RFC 2104.
 
 import warnings as _warnings
 from _operator import _compare_digest as compare_digest
-<<<<<<< HEAD
-=======
-try:
-    import _hashlib as _hashopenssl
-except ImportError:
-    _hashopenssl = None
-    _openssl_md_meths = None
-else:
-    _openssl_md_meths = frozenset(_hashopenssl.openssl_md_meth_names)
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 import hashlib as _hashlib
 
 trans_5C = bytes((x ^ 0x5C) for x in range(256))
@@ -42,13 +32,8 @@ class HMAC:
                    A hashlib constructor returning a new hash object. *OR*
                    A hash name suitable for hashlib.new().
                    Defaults to hashlib.md5.
-<<<<<<< HEAD
                    Implicit default to hashlib.md5 is deprecated and will be
                    removed in Python 3.6.
-=======
-                   Implicit default to hashlib.md5 is deprecated since Python
-                   3.4 and will be removed in Python 3.8.
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
         Note: key and msg must be a bytes or bytearray objects.
         """
@@ -58,13 +43,7 @@ class HMAC:
 
         if digestmod is None:
             _warnings.warn("HMAC() without an explicit digestmod argument "
-<<<<<<< HEAD
                            "is deprecated.", PendingDeprecationWarning, 2)
-=======
-                           "is deprecated since Python 3.4, and will be removed "
-                           "in 3.8",
-                           DeprecationWarning, 2)
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
             digestmod = _hashlib.md5
 
         if callable(digestmod):
@@ -163,41 +142,3 @@ def new(key, msg = None, digestmod = None):
     method.
     """
     return HMAC(key, msg, digestmod)
-<<<<<<< HEAD
-=======
-
-
-def digest(key, msg, digest):
-    """Fast inline implementation of HMAC
-
-    key:    key for the keyed hash object.
-    msg:    input message
-    digest: A hash name suitable for hashlib.new() for best performance. *OR*
-            A hashlib constructor returning a new hash object. *OR*
-            A module supporting PEP 247.
-
-    Note: key and msg must be a bytes or bytearray objects.
-    """
-    if (_hashopenssl is not None and
-            isinstance(digest, str) and digest in _openssl_md_meths):
-        return _hashopenssl.hmac_digest(key, msg, digest)
-
-    if callable(digest):
-        digest_cons = digest
-    elif isinstance(digest, str):
-        digest_cons = lambda d=b'': _hashlib.new(digest, d)
-    else:
-        digest_cons = lambda d=b'': digest.new(d)
-
-    inner = digest_cons()
-    outer = digest_cons()
-    blocksize = getattr(inner, 'block_size', 64)
-    if len(key) > blocksize:
-        key = digest_cons(key).digest()
-    key = key + b'\x00' * (blocksize - len(key))
-    inner.update(key.translate(trans_36))
-    outer.update(key.translate(trans_5C))
-    inner.update(msg)
-    outer.update(inner.digest())
-    return outer.digest()
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98

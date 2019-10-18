@@ -7,13 +7,8 @@ extern "C" {
 #endif
 
 typedef struct {
-<<<<<<< HEAD
 	PyObject_HEAD
 	PyObject *ob_ref;	/* Content of the cell or NULL when empty */
-=======
-    PyObject_HEAD
-    PyObject *ob_ref;       /* Content of the cell or NULL when empty */
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 } PyCellObject;
 
 PyAPI_DATA(PyTypeObject) PyCell_Type;

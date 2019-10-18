@@ -9,17 +9,11 @@ import _locale
 
 if sys.platform.startswith("win"):
     def getpreferredencoding(do_setlocale=True):
-<<<<<<< HEAD
-=======
-        if sys.flags.utf8_mode:
-            return 'UTF-8'
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         return _locale._getdefaultlocale()[1]
 else:
     try:
         _locale.CODESET
     except AttributeError:
-<<<<<<< HEAD
         def getpreferredencoding(do_setlocale=True):
             # This path for legacy systems needs the more complex
             # getdefaultlocale() function, import the full locale module.
@@ -28,26 +22,6 @@ else:
     else:
         def getpreferredencoding(do_setlocale=True):
             assert not do_setlocale
-=======
-        if hasattr(sys, 'getandroidapilevel'):
-            # On Android langinfo.h and CODESET are missing, and UTF-8 is
-            # always used in mbstowcs() and wcstombs().
-            def getpreferredencoding(do_setlocale=True):
-                return 'UTF-8'
-        else:
-            def getpreferredencoding(do_setlocale=True):
-                if sys.flags.utf8_mode:
-                    return 'UTF-8'
-                # This path for legacy systems needs the more complex
-                # getdefaultlocale() function, import the full locale module.
-                import locale
-                return locale.getpreferredencoding(do_setlocale)
-    else:
-        def getpreferredencoding(do_setlocale=True):
-            assert not do_setlocale
-            if sys.flags.utf8_mode:
-                return 'UTF-8'
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
             result = _locale.nl_langinfo(_locale.CODESET)
             if not result and sys.platform == 'darwin':
                 # nl_langinfo can return an empty string

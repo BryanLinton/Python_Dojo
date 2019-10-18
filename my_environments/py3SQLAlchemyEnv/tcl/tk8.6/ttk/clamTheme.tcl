@@ -7,7 +7,6 @@
 namespace eval ttk::theme::clam {
     variable colors 
     array set colors {
-<<<<<<< HEAD
 	-disabledfg	"#999999"
 	-frame  	"#dcdad5"
 	-window  	"#ffffff"
@@ -18,20 +17,6 @@ namespace eval ttk::theme::clam {
 	-lightest 	"#ffffff"
 	-selectbg	"#4a6984"
 	-selectfg	"#ffffff"
-=======
-	-disabledfg		"#999999"
-	-frame  		"#dcdad5"
-	-window  		"#ffffff"
-	-dark			"#cfcdc8"
-	-darker 		"#bab5ab"
-	-darkest		"#9e9a91"
-	-lighter		"#eeebe7"
-	-lightest 		"#ffffff"
-	-selectbg		"#4a6984"
-	-selectfg		"#ffffff"
-	-altindicator		"#5895bc"
-	-disabledaltindicator	"#a0a0a0"
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     }
 
     ttk::style theme settings clam {
@@ -95,21 +80,9 @@ namespace eval ttk::theme::clam {
 	    -indicatormargin {1 1 4 1} \
 	    -padding 2 ;
 	ttk::style map TCheckbutton -indicatorbackground \
-<<<<<<< HEAD
 	    [list  disabled $colors(-frame)  pressed $colors(-frame)]
 	ttk::style map TRadiobutton -indicatorbackground \
 	    [list  disabled $colors(-frame)  pressed $colors(-frame)]
-=======
-	    [list  pressed $colors(-frame) \
-			{!disabled alternate} $colors(-altindicator) \
-			{disabled alternate} $colors(-disabledaltindicator) \
-			disabled $colors(-frame)]
-	ttk::style map TRadiobutton -indicatorbackground \
-	    [list  pressed $colors(-frame) \
-			{!disabled alternate} $colors(-altindicator) \
-			{disabled alternate} $colors(-disabledaltindicator) \
-			disabled $colors(-frame)]
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 	ttk::style configure TMenubutton \
 	    -width -11 -padding 5 -relief raised
@@ -129,11 +102,7 @@ namespace eval ttk::theme::clam {
 	    -fieldbackground [list {readonly focus} $colors(-selectbg) \
 				  readonly $colors(-frame)] \
 	    -foreground [list {readonly focus} $colors(-selectfg)] \
-<<<<<<< HEAD
 	    ;
-=======
-	    -arrowcolor [list disabled $colors(-disabledfg)]
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 	ttk::style configure ComboboxPopdownFrame \
 	    -relief solid -borderwidth 1
 
@@ -154,17 +123,8 @@ namespace eval ttk::theme::clam {
 	    -font TkHeadingFont -relief raised -padding {3}
 	ttk::style configure Treeview -background $colors(-window)
 	ttk::style map Treeview \
-<<<<<<< HEAD
 	    -background [list selected $colors(-selectbg)] \
 	    -foreground [list selected $colors(-selectfg)] ;
-=======
-	    -background [list disabled $colors(-frame)\
-				{!disabled !selected} $colors(-window) \
-				selected $colors(-selectbg)] \
-	    -foreground [list disabled $colors(-disabledfg) \
-				{!disabled !selected} black \
-				selected $colors(-selectfg)]
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
     	ttk::style configure TLabelframe \
 	    -labeloutside true -labelmargins {0 0 0 4} \

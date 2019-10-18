@@ -10,15 +10,9 @@ extern "C" {
 #include "Python.h"
 
 PyAPI_FUNC(void) PySys_WriteStdout(const char *format, ...)
-<<<<<<< HEAD
 			Py_GCC_ATTRIBUTE((format(printf, 1, 2)));
 PyAPI_FUNC(void) PySys_WriteStderr(const char *format, ...)
 			Py_GCC_ATTRIBUTE((format(printf, 1, 2)));
-=======
-                        Py_GCC_ATTRIBUTE((format(printf, 1, 2)));
-PyAPI_FUNC(void) PySys_WriteStderr(const char *format, ...)
-                        Py_GCC_ATTRIBUTE((format(printf, 1, 2)));
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 #define addarc _Py_addarc
 #define addbit _Py_addbit

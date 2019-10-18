@@ -10,8 +10,6 @@ Some of this can actually be useful on non-Posix systems too, e.g.
 for manipulation of the pathname component of URLs.
 """
 
-<<<<<<< HEAD
-=======
 # Strings representing various path-related bits and pieces.
 # These are primarily for export; internally, they are hardcoded.
 # Should be set before imports for resolving cyclic dependency.
@@ -20,11 +18,10 @@ pardir = '..'
 extsep = '.'
 sep = '/'
 pathsep = ':'
-defpath = '/bin:/usr/bin'
+defpath = ':/bin:/usr/bin'
 altsep = None
 devnull = '/dev/null'
 
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 import os
 import sys
 import stat
@@ -40,19 +37,6 @@ __all__ = ["normcase","isabs","join","splitdrive","split","splitext",
            "devnull","realpath","supports_unicode_filenames","relpath",
            "commonpath"]
 
-<<<<<<< HEAD
-# Strings representing various path-related bits and pieces.
-# These are primarily for export; internally, they are hardcoded.
-curdir = '.'
-pardir = '..'
-extsep = '.'
-sep = '/'
-pathsep = ':'
-defpath = ':/bin:/usr/bin'
-altsep = None
-devnull = '/dev/null'
-=======
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 
 def _get_sep(path):
     if isinstance(path, bytes):
@@ -262,16 +246,7 @@ def expanduser(path):
     if i == 1:
         if 'HOME' not in os.environ:
             import pwd
-<<<<<<< HEAD
             userhome = pwd.getpwuid(os.getuid()).pw_dir
-=======
-            try:
-                userhome = pwd.getpwuid(os.getuid()).pw_dir
-            except KeyError:
-                # bpo-10496: if the current user identifier doesn't exist in the
-                # password database, return the path unchanged
-                return path
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
         else:
             userhome = os.environ['HOME']
     else:
@@ -282,11 +257,6 @@ def expanduser(path):
         try:
             pwent = pwd.getpwnam(name)
         except KeyError:
-<<<<<<< HEAD
-=======
-            # bpo-10496: if the user name from the path doesn't exist in the
-            # password database, return the path unchanged
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
             return path
         userhome = pwent.pw_dir
     if isinstance(path, bytes):

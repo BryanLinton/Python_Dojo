@@ -97,38 +97,11 @@ def translate(pat):
             if j >= n:
                 res = res + '\\['
             else:
-<<<<<<< HEAD
                 stuff = pat[i:j].replace('\\','\\\\')
                 i = j+1
                 if stuff[0] == '!':
                     stuff = '^' + stuff[1:]
                 elif stuff[0] == '^':
-=======
-                stuff = pat[i:j]
-                if '--' not in stuff:
-                    stuff = stuff.replace('\\', r'\\')
-                else:
-                    chunks = []
-                    k = i+2 if pat[i] == '!' else i+1
-                    while True:
-                        k = pat.find('-', k, j)
-                        if k < 0:
-                            break
-                        chunks.append(pat[i:k])
-                        i = k+1
-                        k = k+3
-                    chunks.append(pat[i:j])
-                    # Escape backslashes and hyphens for set difference (--).
-                    # Hyphens that create ranges shouldn't be escaped.
-                    stuff = '-'.join(s.replace('\\', r'\\').replace('-', r'\-')
-                                     for s in chunks)
-                # Escape set operations (&&, ~~ and ||).
-                stuff = re.sub(r'([&~|])', r'\\\1', stuff)
-                i = j+1
-                if stuff[0] == '!':
-                    stuff = '^' + stuff[1:]
-                elif stuff[0] in ('^', '['):
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
                     stuff = '\\' + stuff
                 res = '%s[%s]' % (res, stuff)
         else:

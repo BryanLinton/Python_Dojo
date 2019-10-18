@@ -5,34 +5,18 @@ from ._bootstrap import _resolve_name
 from ._bootstrap import spec_from_loader
 from ._bootstrap import _find_spec
 from ._bootstrap_external import MAGIC_NUMBER
-<<<<<<< HEAD
-=======
-from ._bootstrap_external import _RAW_MAGIC_NUMBER
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 from ._bootstrap_external import cache_from_source
 from ._bootstrap_external import decode_source
 from ._bootstrap_external import source_from_cache
 from ._bootstrap_external import spec_from_file_location
 
 from contextlib import contextmanager
-<<<<<<< HEAD
-=======
-import _imp
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 import functools
 import sys
 import types
 import warnings
 
 
-<<<<<<< HEAD
-=======
-def source_hash(source_bytes):
-    "Return the hash of *source_bytes* as used in hash-based pyc files."
-    return _imp.source_hash(_RAW_MAGIC_NUMBER, source_bytes)
-
-
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
 def resolve_name(name, package):
     """Resolve a relative module name to an absolute one."""
     if not name.startswith('.'):
@@ -100,24 +84,11 @@ def find_spec(name, package=None):
     if fullname not in sys.modules:
         parent_name = fullname.rpartition('.')[0]
         if parent_name:
-<<<<<<< HEAD
             # Use builtins.__import__() in case someone replaced it.
             parent = __import__(parent_name, fromlist=['__path__'])
             return _find_spec(fullname, parent.__path__)
         else:
             return _find_spec(fullname, None)
-=======
-            parent = __import__(parent_name, fromlist=['__path__'])
-            try:
-                parent_path = parent.__path__
-            except AttributeError as e:
-                raise ModuleNotFoundError(
-                    f"__path__ attribute not found on {parent_name!r} "
-                    f"while trying to find {fullname!r}", name=fullname) from e
-        else:
-            parent_path = None
-        return _find_spec(fullname, parent_path)
->>>>>>> 311d4a7cb79f6cae733e750176059f554e8eaa98
     else:
         module = sys.modules[fullname]
         if module is None:
