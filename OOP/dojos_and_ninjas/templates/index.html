@@ -8,6 +8,20 @@
 </head>
 <body>
     <h1>Add a Dojo</h1>
+    <form action="/add_dojo" method="POST">
+        <p>Name:<input type="text" name="dojo"></p>
+        <p>City:<input type="text" name="city"></p>
+        <p>State:<input type="text" name="state"></p>
+        <input type="submit" value="Add">
+    </form>
+    <form action="/add_ninja" method="POST">
+        <p>First Name:<input type="text" name="first_name"></p>
+        <p>Last Name:<input type="text" name="last_name"></p>
+        <p>Dojo: <select name="dojo_name">
+            <option value=""></option>
+        </select></p>
+        <input type="submit" value="Add">
+    </form>
     <h1>Add a Ninja</h1>
     <hr>
     <h1>All the Dojos</h1>

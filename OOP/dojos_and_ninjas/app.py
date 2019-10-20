@@ -20,8 +20,6 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, server_default=func.now())   
     updated_at = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())
     
-
-
 class Dojo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     dojo_name = db.Column(db.String(45))
@@ -30,11 +28,9 @@ class Dojo(db.Model):
     created_at = db.Column(db.DateTime, server_default=func.now())   
     updated_at = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())
 
-    
-
-
 @app.route("/")
 def dojo_users():
+    create_user = User(first_name = request.form["first_name"], last_name = request.form["last_name"])
     return render_template("index.html")
 
 @app.route("/add_dojo", methods=["POST"])
