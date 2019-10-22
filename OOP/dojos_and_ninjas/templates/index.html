@@ -14,16 +14,17 @@
         <p>State:<input type="text" name="state"></p>
         <input type="submit" value="Add">
     </form>
+    <h1>Add a Ninja</h1>
     <form action="/add_ninja" method="POST">
         <p>First Name:<input type="text" name="first_name"></p>
         <p>Last Name:<input type="text" name="last_name"></p>
         <p>Dojo: <select name="dojo_name">
-            <option value=""></option>
+            {%for dojo in display_info%}
+            <option value={{dojo.dojo_name}}>{{dojo.dojo_name}}</option>
+            {% endfor %}
         </select></p>
         <input type="submit" value="Add">
     </form>
-    <h1>Add a Ninja</h1>
     <hr>
-    <h1>All the Dojos</h1>
 </body>
 </html>

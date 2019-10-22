@@ -30,8 +30,8 @@ class Dojo(db.Model):
 
 @app.route("/")
 def dojo_users():
-    create_user = User(first_name = request.form["first_name"], last_name = request.form["last_name"])
-    return render_template("index.html")
+    display_info = Dojo.query.all()
+    return render_template("index.html", display_info = display_info)
 
 @app.route("/add_dojo", methods=["POST"])
 def add_dojo():
@@ -42,6 +42,9 @@ def add_dojo():
 
 @app.route("/add_ninja", methods=["POST"])
 def add_ninja():
+    create_ninja = User(first_name = request.form["first_name"], last_name = request.form["last_name"], uDojo=1)
+    db.session.add(create_ninja)
+    db.session.commit()
     return redirect("/")
 
 if __name__ == "__main__":
