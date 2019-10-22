@@ -20,11 +20,23 @@
         <p>Last Name:<input type="text" name="last_name"></p>
         <p>Dojo: <select name="dojo_name">
             {%for dojo in display_info%}
-            <option value={{dojo.dojo_name}}>{{dojo.dojo_name}}</option>
+            <option value={{dojo.id}}>{{dojo.dojo_name}}</option>
             {% endfor %}
         </select></p>
         <input type="submit" value="Add">
     </form>
     <hr>
+    <h1>All the Dojos</h1>
+        <ul>
+            {%for details in display_info %}
+            <li>{{details.dojo_name}}</li>
+                <ul>
+                    {% for name in details.user_dojo %}
+                        <li>{{name.first_name}} {{name.last_name}}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </ul>
+    
 </body>
 </html>

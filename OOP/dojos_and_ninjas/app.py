@@ -14,7 +14,6 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(45))
     last_name = db.Column(db.String(45))
-    Dojo = db.Column(db.String(45))
     dojo_id = db.Column(db.Integer, db.ForeignKey("dojo.id"), nullable=False)
     uDojo = db.relationship("Dojo", foreign_keys=[dojo_id], backref="user_dojo", cascade="all")
     created_at = db.Column(db.DateTime, server_default=func.now())   
@@ -42,7 +41,7 @@ def add_dojo():
 
 @app.route("/add_ninja", methods=["POST"])
 def add_ninja():
-    create_ninja = User(first_name = request.form["first_name"], last_name = request.form["last_name"], uDojo=1)
+    create_ninja = User(first_name = request.form["first_name"], last_name = request.form["last_name"], dojo_id=request.form["dojo_name"])
     db.session.add(create_ninja)
     db.session.commit()
     return redirect("/")
